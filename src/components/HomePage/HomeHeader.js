@@ -1,7 +1,17 @@
 import React, { useState } from 'react'
+import AuthModal from './Modal/AuthModal';
 
 export default function HomeHeader() {
-    
+    const [isOpen, setIsOpen] = useState(false);
+    const handleCancel = ()=>{
+        setIsOpen(false)
+    }
+    const handleOk = () =>{
+        setIsOpen(false)
+    }
+    const showModal =()=>{
+        setIsOpen(true)
+    }
     return (
     <header>
         <div className='header'>
@@ -20,18 +30,23 @@ export default function HomeHeader() {
                 <span>Write</span>
             </div>
             <div className='header-right-option'>
-                <span >Sign in</span>
+                <span onClick={showModal} >Sign in</span>
             </div> 
             <div className='header-right-started'>
                 <span>
-                    <button >Get Stared</button>
+                    <button onClick={showModal} >Get Stared</button>
                 </span>
             </div>   
         
         </div>
         </div>
         </div>
-        
+    
+        <AuthModal
+            isOpen={isOpen}
+            handleCancel={handleCancel}
+            handleOk={handleOk}
+        />
     </header>
   )
 }
