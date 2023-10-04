@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Skeleton } from "antd";
-import Stories from "../MyStories.js/Stories"
+import Stories from "../MyStories/Stories"
 
 const ListMain =({userDetails})=> {
   

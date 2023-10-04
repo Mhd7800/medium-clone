@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import LandingPage from "./components/LandingPage/index";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import HomePage from './components/HomePage'
 import { useDispatch } from 'react-redux';
 import { auth } from './firebase';
 import { login } from './features/userSlice';
 import PrivateRoute from './helpers/PrivateRoute';
 import Lists from "./components/Lists"
+import OurStory from "./components/OurStory"
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
               </PrivateRoute>
             }
           />*/}
+          <Route path="/our-story" element={<OurStory />} />
       </Routes>
     </Router>
   );
