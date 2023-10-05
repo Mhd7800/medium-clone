@@ -9,6 +9,7 @@ import { login } from './features/userSlice';
 import PrivateRoute from './helpers/PrivateRoute';
 import Lists from "./components/Lists"
 import OurStory from "./components/OurStory"
+import Membership from "./components/Membership"
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
             }
           />*/}
           <Route path="/our-story" element={<OurStory />} />
+          <Route path="/membership" element={<Membership/>} />
       </Routes>
     </Router>
   );

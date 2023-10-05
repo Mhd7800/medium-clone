@@ -26,14 +26,20 @@ export default function HomeHeader() {
         <div className='header-right'>
         <div className='header-right-options'>
             <div className='header-right-option'>
-                <Link to="/our-story">
+                
                 <span>
+                <Link className='link' to="/our-story">
                     Our Story
+                    </Link>
                 </span>
-                </Link>
+                
             </div>
             <div className='header-right-option'>
-                <span>Membership</span>
+                <span>
+                <Link className='link' to="/membership">
+                    Membership
+                    </Link>
+                </span>
             </div>
             <div className='header-right-option'>
                 <span>Write</span>

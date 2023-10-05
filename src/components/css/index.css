@@ -44,6 +44,9 @@
     border-radius: 33px;
     font-size: 15px;
   }
+  .link{
+    list-style: none;
+  }
   
   @media screen and (max-width: 600px) {
     .header-right-options-button {
