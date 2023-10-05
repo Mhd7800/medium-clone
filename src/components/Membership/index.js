@@ -3,6 +3,7 @@ import HomeHeader from '../HomePage/HomeHeader'
 import './css/index.css'
 import { Avatar } from 'antd'
 import SocialProof from './SocialProof'
+import Footer from "../footer/Footer"
 
 const index = () => {
   return (<>
@@ -70,6 +71,7 @@ const index = () => {
                     <img src='https://cdn-static-1.medium.com/sites/medium.com/membership/images/Membership_Footer.svg'>
                     </img>
                 </div>
+                <Footer/>
             </div>
             
         </>

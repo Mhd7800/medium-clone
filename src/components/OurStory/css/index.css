@@ -21,7 +21,8 @@
     font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif;
     margin-top: 50px;
     margin-left: 30px;
-    margin-right: 800px;
+    /*margin-right: 800px;*/
+    max-width: 650px;
     /*create a inside div here at the right leave it empty to fix this*/
     text-align: left;
     font-size: 25px;
