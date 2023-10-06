@@ -4,23 +4,26 @@ import Header from '../Header'
 import Footer from '../footer/Footer'
 import "./index.css"
 
+import Accordion from '../Accordion'
+
 const index = ()=> {
     
+
     /*const items = document.querySelectorAll('.accordion button');
 
-function toggleAccordion() {
-  const itemToggle = this.getAttribute('aria-expanded');
+    function toggleAccordion() {
+    const itemToggle = this.getAttribute('aria-expanded');
 
-  for (i = 0; i < items.length; i++) {
-    items[i].setAttribute('aria-expanded', 'false');
-  }
+    for (i = 0; i < items.length; i++) {
+        items[i].setAttribute('aria-expanded', 'false');
+    }
 
-  if (itemToggle == 'false') {
-    this.setAttribute('aria-expanded', 'true');
-  }
-}
+    if (itemToggle == 'false') {
+        this.setAttribute('aria-expanded', 'true');
+    }
+    }
 
-items.forEach((item) => item.addEventListener('click', toggleAccordion));*/
+    items.forEach((item) => item.addEventListener('click', toggleAccordion));*/
 
   return (
     <>
@@ -82,77 +85,94 @@ items.forEach((item) => item.addEventListener('click', toggleAccordion));*/
             </button>
             </div>
 
-          <div class="container">
-      <h2>Frequently Asked Questions</h2>
+          {/*<div class="container">
+      
       <div class="accordion">
+      <h2>FAQ</h2>
         <div class="accordion-item">
           <button id="accordion-button-1" aria-expanded="false">
-            <span class="accordion-title">Why is the moon sometimes out during the day?</span>
+            <span class="accordion-title">What are the new changes for the Partner Program?</span>
             <span class="icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut.
-              Ut tortor pretium viverra suspendisse potenti.
+            We’ve updated the Partner Program to incentivize high-quality human writing. Here’s a quick summary: we’ve opened up the Partner Program to more locations, removed the 100 follower requirement, and require Medium membership to join. Earnings will be higher for stories that have repeat readers, have been Boosted, and that have a high read ratio. All stories will also earn more based on engagement signals like claps, highlights, and replies. Referral bonuses are being deprecated and new story stats will be added in so writers can better understand their story earnings breakdown.
+
+            <a src="https://blog.medium.com/new-partner-program-incentives-focus-on-high-quality-human-writing-7335f8557f6e">Read more about all of the changes and our vision for the Partner Program.</a>
+
             </p>
           </div>
         </div>
         <div class="accordion-item">
           <button id="accordion-button-2" aria-expanded="false">
-            <span class="accordion-title">Why is the sky blue?</span>
+            <span class="accordion-title">What are the eligibility requirements to join the Partner Program?</span>
             <span class="icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut.
-              Ut tortor pretium viverra suspendisse potenti.
+            To join the Partner Program, you will need to meet the following eligibility requirements:
+
+            1.Be a Medium member
+            2.Have published at least one story on Medium in the past 6 months
+            3.Are located in a supported country
+            4.Are 18 years of age or older
+            <a src="https://help.medium.com/hc/en-us/articles/115011694187-Getting-started-with-the-Partner-Program">Check out the eligibility requirements and details about the Partner Program.</a>
             </p>
           </div>
         </div>
         <div class="accordion-item">
           <button id="accordion-button-3" aria-expanded="false">
-            <span class="accordion-title">Will we ever discover aliens?</span>
+            <span class="accordion-title">How are earnings calculated?</span>
             <span class="icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut.
-              Ut tortor pretium viverra suspendisse potenti.
+            Earnings will be based on member read and listen time as well as member engagement signals. This includes claps, highlights, replies, and new follows. Reads and read ratios will be defined as people who read your story for 30 seconds or more divided by total views. More information on how earnings are calculated can be found <a src="https://help.medium.com/hc/en-us/articles/16030675401879-How-stories-earn-in-the-new-Partner-Program">here</a> with examples featured <a src="https://help.medium.com/hc/en-us/articles/360036691193">here</a>.
             </p>
           </div>
         </div>
         <div class="accordion-item">
           <button id="accordion-button-4" aria-expanded="false">
-            <span class="accordion-title">How much does the Earth weigh?</span>
+            <span class="accordion-title">What is happening with referred memberships?</span>
             <span class="icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut.
-              Ut tortor pretium viverra suspendisse potenti.
+            We’re deprecating the Membership Referral Program and replacing it with a Follower Bonus. Stories that are read by and have engagement with existing followers will get an extra bonus in earnings.
+
+All member referrals made up until September 1, 2023 will continue to be honored indefinitely. We will keep your custom referral pages up so that they don’t break your links in stories, but we will stop generating new referrals for members who sign up after September 1st.
             </p>
           </div>
         </div>
         <div class="accordion-item">
           <button id="accordion-button-5" aria-expanded="false">
-            <span class="accordion-title">How do airplanes stay up?</span>
+            <span class="accordion-title">Do existing Partner Program writers need to re-apply or update anything at this time?</span>
             <span class="icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut.
-              Ut tortor pretium viverra suspendisse potenti.
+            Nope, if you’re already in the Partner Program, you won’t have to do anything new to stay in the program.
+            </p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button id="accordion-button-6" aria-expanded="false">
+            <span class="accordion-title">Where can I go if I have more questions about the Partner Program?</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+            Check out the Partner <a src="https://help.medium.com/hc/en-us/articles/115011694187-Getting-started-with-the-Partner-Program">Program Guide!</a> If you have any other questions, submit a <a src="https://help.medium.com/hc/en-us/requests/new">Help Desk</a> request and we’ll get back to you as soon as possible!
             </p>
           </div>
         </div>
       </div>
-    </div>
-          
+  </div>*/}
+
+
+    <Accordion />
+    
     </div>
     <Footer />
     </>
