@@ -38,6 +38,6 @@
     height: auto;
     max-height: 9999px;
     transition: all 0.5s cubic-bezier(0,1,0,1);
-    font-size: 18px; !important
+    font-size: 18px; 
 }
 
