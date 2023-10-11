@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AuthModal from './Modal/AuthModal';
 import { Link } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
@@ -15,9 +15,29 @@ export default function HomeHeader() {
     const showModal =()=>{
         setIsOpen(true)
     }
+    
+    const [navColor, setnavColor] = useState("#FF9900");
+    const [buttonColor, setButtonColor] = useState("#FF9900");
+
+    const listenScrollEvent = () =>{
+        window.scrollY > 350 ? setnavColor("#fff") : setnavColor("#FF9900");
+        window.scrollY > 350 ? setButtonColor("rgb(26, 137, 23)") : setButtonColor("#000");
+    }
+
+    useEffect (()=>{
+        window.addEventListener("scroll", listenScrollEvent);
+        return ()=>{
+            window.removeEventListener("scroll", listenScrollEvent);
+        };
+    },[]);
+    
+
     return (
     <header>
-        <div className='header'>
+        <div style={{
+            backgroundColor:navColor,
+        transition:"all 1s"}} 
+        className='header'>
         <div className='header-left'>
         <Link className='link' to="/getting-started">
         <svg height={25} viewBox="0 0 3940 610" className="bn bo">
@@ -33,7 +53,7 @@ export default function HomeHeader() {
                     Our Story
                 </span>
                 </Link>
-                
+
             </div>
             <div className='header-right-option'>
             <Link className='link' to="/membership">
@@ -50,11 +70,13 @@ export default function HomeHeader() {
                 
             </div>
             <div className='header-right-option'>
-                <span onClick={showModal} >Sign in</span>
+                <span onClick={showModal} >Sign In</span>
             </div> 
             <div className='header-right-started'>
                 <span>
-                    <button onClick={showModal} >Get Stared</button>
+                    <button 
+                    style={{ backgroundColor: buttonColor }}
+                    onClick={showModal} >Get Stared</button>
                 </span>
             </div>   
         

@@ -5,11 +5,12 @@
     align-items: center;
     width: 100%;
     justify-content: space-around;
-    background-color: rgb(196 226 255);
+    background-color: #FF9900;
     padding: 20px 0px;
     border-bottom: 1px solid #000;
+    position: fixed;
   }
-  
+
   .header-left {
     display: flex;
     align-items: center;
@@ -49,7 +50,7 @@
   }
   
   @media screen and (max-width: 600px) {
-    .header-right-options-button {
+    .header-right-option {
       display: none;
     }
   }
@@ -61,7 +62,7 @@
     width: 100%;
     justify-content: space-around;
     padding: 20px 0px;
-    background-color: rgb(196 226 255);
+    background-color: #FF9900;
     min-height: auto;
   }
   
