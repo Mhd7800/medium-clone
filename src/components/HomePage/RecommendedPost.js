@@ -20,11 +20,12 @@ export default function RecommendedPost() {
                         <div className='rcm-post-right'>
                         <div className='rcm-post-content'>
                         <div className='rcm-post-top'>
-                            <img src={"https://img.icons8.com/?size=50&id=23264&format=png"} alt='logo'/>
-                            <span>Usermame Blog</span>
+                        <img src="https://cdn-images-1.medium.com/fit/c/45/45/1*OdaLifs02To5Yibe8Pgrwg.png" class="avatar-image u-size36x36 u-xs-size32x32" alt="Go to the profile of The Bold Italic">
+                            </img>
+                            <span>The Bold Italic</span>
                         </div>
                         <div className='content'>
-                            <p>This is the title of the blog</p>
+                            <p>The real crime in San Francisco: Fashion</p>
                         </div>
                         <div className='footer'>
                             <span>21.09.2023 | 2 min read</span>

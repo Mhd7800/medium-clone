@@ -56,68 +56,85 @@
   }
 
 
-  /*Home main css  ----------------------------------*/
-  .main {
+  /*Home main css  \*----------------------------------*/
+  .home-main {
     display: flex;
     width: 100%;
+    align-items: center;
     justify-content: space-around;
     padding: 20px 0px;
     background-color: #FF9900;
-    min-height: auto;
+    /*min-height: auto;*/
+    border-bottom: #000 1px solid;
   }
   
-  .main-container {
+  .home-main-container {
     display: flex;
     /* max-width: 90vw; */
+    flex-direction: row;
   }
-  
-  .main-content {
+  .home-main-animation{
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+  }
+  .home-main-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
+    letter-spacing: -0.055em;
   }
   
-  .main-content > h3 {
-    font-size: 5rem;
+  .home-main-content > h3 {
+    font-size: 6rem;
     font-family: "Times New Roman", Times, serif;
     color: rgba(8, 8, 8, 1);
     font-weight: 500;
-    line-height: 5rem;
+    margin-right: auto;
+    margin-left: 50px;
+    margin-bottom: 0;
   }
   
-  .main-content > h6 {
+  .home-main-content > h6 {
     margin: 20px 60px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 400;
   }
   
-  .main-content > button {
+  .home-main-content > button {
     margin-right: auto;
     margin-left: 50px;
     padding: 10px 25px;
     border-radius: 33px;
     font-size: 18px;
     border: 1px solid rgba(8, 8, 8, 1);
-    background-color: #fff;
-    color: rgba(8, 8, 8, 1);
+    background-color: #000;
+    color: #fff;
     cursor: pointer;
+  }
+
+  .home-main-content > button:hover{
+    background-color: #2c2929;
   }
   
   @media screen and (max-width: 600px) {
-    .main-content > h3 {
+    .home-main-content > h3 {
       font-size: 3.8rem;
       margin: 0px 10px;
     }
   
-    .main-content > h6 {
+    .home-main-content > h6 {
       margin: 20px 20px;
       font-size: 20px;
     }
-    .main-content > button {
+    .home-main-content > button {
       margin-right: auto;
       margin-left: 20px;
+    }
+    .home-main-animation{
+      display: none;
     }
   }
 
@@ -190,6 +207,7 @@
     display: flex;
     flex-direction: column;
     margin: 0px 10px;
+    color: #000;
   }
   
   .top {
@@ -201,7 +219,7 @@
   
   .top > img {
     border-radius: 30%;
-    width: 20px;
+    width: 15px;
     margin-right: 10px;
     /* margin: 0px 10px; */
   }

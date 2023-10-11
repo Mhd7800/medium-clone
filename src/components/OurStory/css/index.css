@@ -1,11 +1,16 @@
 .about{
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #242424;
 }
 
 .about-items{
+    display: flex;
+    flex-direction: column;
     color: white;
-    background-color: #242424;
+    /*background-color: #242424;*/
     padding: 0;
     margin: 0;
 }

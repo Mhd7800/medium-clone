@@ -1,12 +1,20 @@
 import React from 'react'
 import HomeHeader from '../HomePage/HomeHeader'
 import './css/index.css'
+import Header from "../Header/"
 
 const index = () => {
+
+    const colorStyle = {
+        backgroundColor: '#242424'
+    }
+
   return (
-        
+    <>
+    <div style={colorStyle}>
+    <Header />
+    </div>
         <div className='about'>
-            <HomeHeader backgroundColor = {"#000000"} />
             <div className='about-items'>
                 <div className='about-header'>
                     <h1>Everyone has a <br/>
@@ -62,7 +70,7 @@ const index = () => {
             </div>
 
         </div>   
-    
+        </>
   )
 }
 
