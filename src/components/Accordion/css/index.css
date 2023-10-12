@@ -2,7 +2,6 @@
     display:flex;
     flex-direction: column;
     justify-content: center;
-    /*align-items: center;*/
     background-color: #242424;
     color: #fff;
 }
@@ -18,12 +17,20 @@
 .faq-item{
     border-bottom: 1px solid #fff;
 }
-
+.faq-item p {
+    font-size: 1rem;
+    font-weight: normal;
+}
 .faq-title{
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+}
+
+.faq-title>h3{
+    font-size: 1.15rem;
+    font-weight:normal;
 }
 
 .content{
@@ -41,3 +48,16 @@
     font-size: 18px; 
 }
 
+@media screen and (max-width: 600px){
+    .faq-accordion > h2{
+        font-size: 50px;
+    }
+
+    .faq-title>h3{
+        font-size: 1rem;
+    }
+
+    .faq-item p {
+        font-size: 0.75rem;
+    }
+}

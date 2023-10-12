@@ -4,10 +4,11 @@ import './css/index.css'
 import { Avatar } from 'antd'
 import SocialProof from './SocialProof'
 import Footer from "../footer/Footer"
+import MembershipHeader from './MembershipHeader'
 
 const index = () => {
   return (<>
-            <HomeHeader backgroundColor={"#4479ff"} />
+            <MembershipHeader/>
             <div className='membership'>
                 <div className='top-content'>
                     <h1>Fuel great thinking.</h1>
@@ -16,7 +17,6 @@ const index = () => {
                     <button>Get unlimited access</button>
                 </div>
                 <div>
-                <hr></hr>
                 </div>
                 <div className='middle-content'>
                     <div className='middle-left-content'>

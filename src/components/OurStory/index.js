@@ -5,22 +5,19 @@ import Header from "../Header/"
 
 const index = () => {
 
-    const colorStyle = {
-        backgroundColor: '#242424'
-    }
-
   return (
     <>
-    <div style={colorStyle}>
-    <Header />
-    </div>
+    <Header 
+    color = {"#242424"} 
+    
+    />
+
         <div className='about'>
             <div className='about-items'>
                 <div className='about-header'>
                     <h1>Everyone has a <br/>
                         story to tell.</h1>
                 </div>
-
                 <div className='about-text'>
                     <p>Medium is a home for human stories and ideas. Here, anyone can share insightful perspectives, useful knowledge, and life wisdom with the world—without building a mailing list or a following first. The internet is noisy and chaotic; Medium is quiet yet full of insight. It’s simple, beautiful, collaborative, and helps you find the right audience for whatever you have to say.</p>
 
@@ -32,21 +29,26 @@ const index = () => {
 
                     <p>Instead of selling ads or selling your data, we’re supported by a growing community of Medium members who align with our mission. If you’re new here, start exploring. Dive deeper into whatever matters to you. Find a post that helps you learn something new, or reconsider something familiar—and then share your own story.</p>
                 </div>
-
             <div class="about-buttons">
                 
-                <div class="bt1">
-                <hr/>
-                    <button class="custom-button">Start Reading </button>
+                <div class="btn1">
+                    <button class="custom-button">
+                        Start Reading 
+                        <span>→</span>
+                        </button>
+                        
                 </div>
-                <div class="bt2">
-                <hr/>
-                    <button class="custom-button">Start Writing  </button>
+                <div class="btn2">
+                    <button class="custom-button">
+                        Start Writing  
+                        <span>→</span>
+                        </button>
                 </div>
-                
-                <div class="bt3">
-                <hr/>
-                    <button class="custom-button">Become a Member</button>
+                <div class="btn3">
+                    <button class="custom-button">
+                        Become a Member
+                        <span>→</span>
+                        </button>
                 </div>
             </div>
 
