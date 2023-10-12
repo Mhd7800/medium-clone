@@ -11,7 +11,6 @@ const AuthModal = ({isOpen, handleCancel, handleOk}) =>{
        await signInWithPopup(auth, provider); 
     }
   
-  
     return (
     <Modal
         visible = {isOpen}
