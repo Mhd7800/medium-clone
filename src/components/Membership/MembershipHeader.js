@@ -1,6 +1,7 @@
 import "./css/MembershipHeader.css"
 import React, { useEffect, useState } from 'react'
-import AuthModal from '../HomePage/Modal/AuthModal';
+import {AuthModal} from '../HomePage/Modal/AuthModal'
+
 import { Link } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 

@@ -1,12 +1,22 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import { useLocation, Navigate} from "react-router-dom";
+import { selectCurrentToken } from "../features/authSlice";
 
 function PrivateRoute({ children }) {
   const user = useSelector(selectUser);
+  const token = useSelector(selectCurrentToken)
+  const location = useLocation();
 
-  return user ? children : <Navigate to="/getting-started" />;
+  //|| localStorage.getItem("isAuth")===true
+
+  if (user || token) {
+    return children;
+  } else {
+    return <Navigate to="/getting-started" />;
+  }
+
 }
 
 export default PrivateRoute;

@@ -6,14 +6,22 @@
 }
 
 .modal > h2 {
-    font-size: 3rem;
+    font-size: 2rem;
     font-family: 'Times New Roman', Times, serif;
+    font-weight: lighter;
 }
 
 .signInButtons{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.signInButtons img {
+    float: left;
+}
+.signInButtons svg {
+    float: left;
 }
 
 .signInButtons > button {

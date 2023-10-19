@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import AuthModal from './Modal/AuthModal';
-import { Link } from 'react-router-dom';
+import { AuthModal } from './Modal/AuthModal';
+import { Link, useLocation } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 
 
 export default function HomeHeader() {
+
+    const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const handleCancel = ()=>{
         setIsOpen(false)
@@ -49,23 +51,32 @@ export default function HomeHeader() {
         <div className='header-right-options'>
             <div className='header-right-option'>
             <Link className='link' to="/our-story">
-                <span>
+                <span style={{
+                fontWeight: location.pathname === '/our-story' && 'bold',
+                textDecoration: location.pathname === '/our-story' && 'underline'
+              }}>
                     Our Story
                 </span>
                 </Link>
 
             </div>
             <div className='header-right-option'>
-            <Link className='link' to="/membership">
-                <span>
+            <Link to="/membership">
+                <span style={{
+                fontWeight: location.pathname === '/merbership' && 'bold',
+                textDecoration: location.pathname === '/membership' && 'underline'
+              }}>
                     Membership
                 </span>
                 </Link>
             </div>            
             <div className='header-right-option'>
             
-            <Link className='link' to="/write">
-                <span>Write</span>
+            <Link to="/write">
+                <span style={{
+                fontWeight: location.pathname === '/write' && 'bold',
+                textDecoration: location.pathname === '/write' && 'underline'
+              }}>Write</span>
                 </Link>
                 
             </div>
