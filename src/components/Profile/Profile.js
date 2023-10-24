@@ -24,11 +24,12 @@ const user = useSelector(selectUser);
 
     <div className='profileContainer'>
         <div className='profileLeftContent'>
+            
+            <div className='profileTabElement'>
             <div className='profileName'>
                 <span>{user?.providerData?.displayName}</span>
                 <p>...</p>
             </div>
-            <div className='profileTabElement'>
 
                 <Tabs>
                     <TabList>

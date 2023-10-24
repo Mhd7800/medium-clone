@@ -84,21 +84,7 @@ const LandingMainPage = ({userDetails}) => {
                             <span>Art</span>
                         </div>
                     </div>
-                    <div className='follow'>
-                        <h2>Who to follow</h2>
-                        {users?.map((data) => (
-                        <WhoToFollow key={data?._id} data={data} />
-                        ))}
-                        {[...Array(5)].map((_, idx) => {
-                        return (
-                            <>
-                            {userLoading && (
-                                <Skeleton key={idx} active avatar paragraph={{ rows: 1 }} />
-                            )}
-                            </>
-                        );
-                        })}
-                    </div>
+                   <WhoToFollow/>
                 </div>
             </div>
         </div>

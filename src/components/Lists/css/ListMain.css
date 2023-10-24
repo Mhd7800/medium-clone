@@ -1,0 +1,52 @@
+.story-main{
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.storyLeft-Component{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   flex: 3;
+   margin: 0 120px;
+}
+
+
+.list-UpperComponent{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3rem;
+    /*margin: 50px 0;*/
+}
+.list-UpperComponent span{
+    display: flex;
+    
+}
+
+.list-UpperComponent button {
+    /*display: flex;*/
+    color: white;
+    background-color: green;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.listTabElements{
+    margin: 50px 0;
+}
+
+.divider{
+    border-right: 1px solid #979494;
+}
+
+.storyRight-Component{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    margin-right: 50px;
+    margin-left: 25px;
+}

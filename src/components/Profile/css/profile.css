@@ -13,7 +13,7 @@
 .profileName {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     font-size: 3rem;
 }
@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: column;
     flex:3;
-    justify-content: space-around;
+    
 }
 
 .line{
@@ -37,16 +37,6 @@
     margin: 20px 120px;
 }
 
-/*.toggle-button {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-  }*/
 
 .profileListItem{
     margin-top: 50px;
