@@ -1,19 +1,10 @@
-.story-main{
+.stories-wrapper{
     margin: 0;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
 }
 
-.storyLeft-Component{
-   display: flex;
-   flex-direction: column;
-   margin: 50px 120px;
-   flex: 3;
-}
-
-
-.list-UpperComponent{
+.stories-UpperComponent{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -21,26 +12,25 @@
     font-size: 3rem;
     margin: 50px 0px;
 }
-.list-UpperComponent span{
-    display: flex;
-    
-}
 
-.list-UpperComponent button {
-    /*display: flex;*/
+
+
+.stories-UpperComponent button {
     color: white;
     background-color: green;
     border-radius: 25px;
     cursor: pointer;
 }
 
-
-
-.divider{
-    border-right: 1px solid #979494;
+.stories-left{
+    display: flex;
+   flex-direction: column;
+   /*justify-content: space-around;*/
+   flex: 3;
+   margin: 0 120px;
 }
 
-.storyRight-Component{
+.stories-right{
     display: flex;
     flex-direction: column;
     flex: 2;

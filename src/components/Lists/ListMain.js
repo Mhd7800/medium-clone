@@ -6,6 +6,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ListItem from "../Profile/ListItem"
 import RecommendedTopic from './RecommendedTopic';
 import WhoToFollow from '../LandingPage/WhoToFollow';
+import ReadingHistory from './ReadingHistory';
+import RightTab from './RightTab';
 
 
 const ListMain =({userDetails})=> {
@@ -35,7 +37,7 @@ const ListMain =({userDetails})=> {
                     Saved List
                     </TabPanel>
                     <TabPanel>
-                      Reading History
+                      <ReadingHistory/>
                     </TabPanel>
                 </Tabs>
         </div>
@@ -44,16 +46,7 @@ const ListMain =({userDetails})=> {
         <hr></hr>
       </div>
       <div className='storyRight-Component'>
-
-        <div className='RecommendedTopics'>
-            <RecommendedTopic/>
-        </div>
-        <div className='WhoToFOllow'>
-        <WhoToFollow/>
-        </div>
-        <div className='ReadingLiist'>
-          Reading List
-        </div>
+      <RightTab/>
       </div>
         
     </div>

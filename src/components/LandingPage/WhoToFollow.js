@@ -17,7 +17,7 @@ const WhoToFollow = ({userDetails})=> {
 
   return (
     <div className='follow'>
-    <h2>Who to follow</h2>
+    <h4>Who to follow</h4>
     {users?.map((data) => (
     <WhoToFollow key={data?._id} data={data} />
     ))}

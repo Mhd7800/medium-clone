@@ -20,6 +20,7 @@ import axios from 'axios';
 import { selectCurrentToken, selectCurrentUser, setCredentials } from './features/authSlice';
 import {store} from "./app/store"
 import Profile from './components/Profile/Profile';
+import Stories from './components/Stories/';
 
 function App() {
 
@@ -78,6 +79,15 @@ function App() {
             element={
               <PrivateRoute>
                 <Lists/>
+              </PrivateRoute>
+            }
+          />
+
+        <Route
+            path="/me/stories"
+            element={
+              <PrivateRoute>
+                <Stories/>
               </PrivateRoute>
             }
           />
