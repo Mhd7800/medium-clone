@@ -73,14 +73,14 @@ function App() {
           </PrivateRoute>}
         />
 
-        {/*<Route
+        <Route
             path="/me/lists"
             element={
               <PrivateRoute>
-                <Lists userDetails = {userDetails} />
+                <Lists/>
               </PrivateRoute>
             }
-          />*/}
+          />
           
           <Route path='/register' element={<RegisterWithEmail/>}/>
           <Route path='/sigin' element={<AuthWithEmail/>}/>

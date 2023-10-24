@@ -6,7 +6,7 @@ const Index = ({userDetails})=> {
   return (
     <div>
         <LandingHeader />
-        <ListMain userDetails = {userDetails}/>
+        <ListMain />
     </div>
   )
 }

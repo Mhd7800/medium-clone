@@ -5,60 +5,35 @@ import Stories from "../MyStories/Stories"
 const ListMain =({userDetails})=> {
   
     console.log(userDetails)
-
-    // stories are going to be stored in reading list , when calling the api 
-    const [readingList, setReadingList] = useState()
-    const [loading, setLoading] = useState(false)
-
-    // call the api here 
-    /*
-    async function getReadingList(){
-      setLoading(true)
-      await axios.get(`/api/user/get-list/${userDetails?._id}`).then((res) => {
-        setLoading(false)
-          console.log(res.data.data)
-          let story = res.data?.data?.reverse()
-          setReadingList(story)
-      }).catch((err) => {
-        setLoading(false)
-      })
-    }
-      getReadingList()
-  }, [userDetails])
-    */
-  
   
     return (
     <div className='story-main'>
-        <div className='story-main-container'>
-            <div className='story-main-header'>
-                    <h2>Your lists</h2>
-            </div>
-            <div className='stories-content'>
-            {[...Array(5)].map((_, index) => {
-            return (
-              <>
-                {loading && (
-                  <Skeleton.Button
-                    style={{
-                      height: "100px",
-                      margin: "10px 0",
-                    }}
-                    active={true}
-                    size={"lage"}
-                    shape={"default"}
-                    block={true}
-                    key={index}
-                  />
-                )}
-              </>
-            );
-          })}
-          {/*{readingList?.map((data) => (
-            <Stories key={data?._id} data={data} />
-          ))}*/}
-            </div>
+
+      <div className='storyLeft-Component'>
+        <div className='list-UpperComponent'>
+          <span>Your Library</span>
+          <button>New List</button>
         </div>
+        <div className='listTabElements'>
+
+        </div>
+      </div>
+
+      <div className='storyRight-Component'>
+        <div className='StaffPicks'>
+          Random articles
+        </div>
+        <div className='RecommendedTopics'>
+            RecommendedTopics
+        </div>
+        <div className='WhoToFOllow'>
+        Who to follow
+        </div>
+        <div className='ReadingLiist'>
+          Reading List
+        </div>
+      </div>
+        
     </div>
   )
 }

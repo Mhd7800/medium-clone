@@ -13,12 +13,6 @@ import 'react-tabs/style/react-tabs.css';
 
 const Profile = () => {
 
-/*const [toggle, setToggle] = useState(1);
-
-const updateToggle =((id)=>{
-    setToggle(id);
-})*/
-
 
 const user = useSelector(selectUser);
 
@@ -35,13 +29,6 @@ const user = useSelector(selectUser);
                 <p>...</p>
             </div>
             <div className='profileTabElement'>
-
-                {/*<button className={`toggle-button ${toggle===1 ? "selected-button" : ""}`}
-                onClick={(()=>updateToggle(1))}>Home</button>
-                <button className={`toggle-button ${toggle===2 ? "selected-button" : ""}`}
-                onClick={(()=>updateToggle(2))}>About</button>
-            
-                {toggle ===1 ? <ListItem /> : <About/>}*/}
 
                 <Tabs>
                     <TabList>
