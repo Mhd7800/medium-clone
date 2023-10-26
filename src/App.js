@@ -21,6 +21,9 @@ import { selectCurrentToken, selectCurrentUser, setCredentials } from './feature
 import {store} from "./app/store"
 import Profile from './components/Profile/Profile';
 import Stories from './components/Stories/';
+import WriteStories from './components/WriteStories'
+import Stats from './components/Stats/Stats';
+import Settings from './components/Settings/Settings';
 
 function App() {
 
@@ -88,6 +91,30 @@ function App() {
             element={
               <PrivateRoute>
                 <Stories/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/new-story"
+            element={
+              <PrivateRoute>
+                <WriteStories/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/me/stats"
+            element={
+              <PrivateRoute>
+                <Stats/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/me/settings"
+            element={
+              <PrivateRoute>
+                <Settings/>
               </PrivateRoute>
             }
           />
