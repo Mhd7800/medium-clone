@@ -109,7 +109,10 @@
 .profileRightUpper h3 {
     font-size: 1rem;
 }
-
+.profileRightUpper span{
+    color: green;
+    cursor: pointer;
+}
 
 .proileFooter{
     position: absolute;

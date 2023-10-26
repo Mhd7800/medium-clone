@@ -10,11 +10,34 @@ import { useState } from 'react'
 import About from './About'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import ProfileInformation from './ProfileInformation'
+
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 500,
+    bgcolor: 'background.paper',
+    border: 'none',
+    boxShadow: 24,
+    p: 4,
+  };
+
 
 const Profile = () => {
 
 
 const user = useSelector(selectUser);
+const [open, setOpen] = React.useState(false);
+const handleOpen = () => setOpen(true);
+const handleClose = () => setOpen(false);
+
 
   return (
     <div className='profilePage'>
@@ -65,7 +88,23 @@ const user = useSelector(selectUser);
                 ></Avatar>
             <h3>{user?.providerData?.displayName}</h3>
             <p>about me</p>
-            <span style={{color:"green"}}>Edit profile</span>
+        
+            <span onClick={handleOpen}>Edit profile</span>
+            <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Profile Information
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+        <ProfileInformation/>
+          </Typography>
+        </Box>
+      </Modal>
             </div>
             <div className='proileFooter'>
             <Footer/>
