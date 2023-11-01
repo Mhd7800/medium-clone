@@ -29,7 +29,7 @@ function App() {
 
   const user = useSelector(selectCurrentUser)
   const token = useSelector(selectCurrentToken)
-
+  
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useState()
   const [isAuth, setIsAuth]= useState(false);
@@ -42,20 +42,47 @@ function App() {
   }
 
 
-
-
-  useEffect(()=>{
-    auth.onAuthStateChanged(async(authUser)=>{
-      if(authUser){
-        console.log({authUser})
-        localStorage.setItem("isAuth",true);
+  useEffect(() => {
+    auth.onAuthStateChanged(async (authUser) => {
+      if (authUser) {
+        const response = await axios.post('http://localhost:8080/api/v1/auth/check-user', {
+          email: authUser.email,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+          if (response.status === 204) {
+           await axios.post('http://localhost:8080/api/v1/auth/registerWithGoogle', {
+            email: authUser?.email,
+            name: authUser?.displayName,
+            id: authUser?.providerId,          
+            photoURL: authUser?.providerData?.photoURL,
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+  
+          /*if (registrationResponse.status === 201) {
+            console.log('// User registered successfully')
+          } else {
+            console.log('// Handle registration error')
+          }*/
+        } else if (response.status === 200) {
+          // User already exists, do nothing
+        }
+  
+        localStorage.setItem("isAuth", true);
         dispatch(
           login({
-          providerData: authUser.providerData[0],
-        }));
-      } 
-    })
-  }, [dispatch])
+            providerData: authUser.providerData[0],
+          }));
+      }
+    });
+  }, [dispatch]);
+  
 
 
   return (

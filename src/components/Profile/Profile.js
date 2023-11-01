@@ -86,7 +86,7 @@ const handleClose = () => setOpen(false);
                         />
                       }
                 ></Avatar>
-            <h3>{user?.providerData?.displayName}</h3>
+            <h3>{user?.providerData?.displayName }</h3>
             <p>about me</p>
         
             <span onClick={handleOpen}>Edit profile</span>
