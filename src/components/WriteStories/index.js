@@ -13,16 +13,16 @@ import {  useGetStoriesQuery,
   useUpdateStoryMutation,
   useDeleteStoryMutation } from '../../features/api/MyApiSlice';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
 
 const Index = () => {
 
-    //const userId = useSelector(selectUserId);
+    
     const [title, setTitle] = React.useState("");
     const [desc, setDesc] = React.useState("");
-    //alert(userId);
-    //const user = useSelector(selectUser);
     
+    const userId = useSelector((state) => state.user.userId);
+    
+    //alert(userId);
 
     //const [getUserId] = useGetUserIdQuery()
       //const[addStory] = useAddStorieMutation()
@@ -47,6 +47,7 @@ const Index = () => {
         }}
       >
         <h2>Title of the Story</h2>
+        <h2>{userId}</h2>
       </div>
 
       <Editor

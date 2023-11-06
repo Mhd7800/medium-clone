@@ -2,9 +2,11 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import "./css/RegisterWithEmail.css"
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export default function RegisterWithEmail() {
+
+  let navigate = useNavigate();
 
   //initialize user data 
   const [formData, setFormData] = useState({
@@ -14,6 +16,7 @@ export default function RegisterWithEmail() {
     password:'',
   });
   const [error, setError] = useState(null);
+  
 
 
   // state for user registartion success
@@ -24,8 +27,8 @@ export default function RegisterWithEmail() {
     if (registrationSuccess) {
       const redirectTimeout = setTimeout(() => {
         // Redirect the user to a logged-in page after a delay
-        window.location.href = '/sigin';
-      }, 300); // Redirect after 3 seconds (adjust as needed)
+        navigate('/sigin');
+      }, 1000); // Redirect after 1 second 
 
       return () => clearTimeout(redirectTimeout); // Clear the timeout if component unmounts
     }
@@ -36,12 +39,13 @@ export default function RegisterWithEmail() {
     event.preventDefault();
     try {
       const response = await axios.post("http://localhost:8080/api/v1/auth/register", formData);
+     
       setRegistrationSuccess(true); // Set registration success to true
-      console.log(response)
+      console.log(response.message)
     } catch (error) {
       //console.log(response)
-      setError("error")
-      console.error('Registration error:', error);
+      setError('error')
+      //console.error('Registration error:', error);
 
     }
   };
@@ -59,7 +63,7 @@ export default function RegisterWithEmail() {
       <span className='registerTitle'>Register</span>
       {error}
       {registrationSuccess && ( // Conditionally render success message
-        <div className="registrationSuccessMessage">{formData.username} Registered successfully!  You will be redirected to the login page shortly</div>
+        <div style={{color:"green"}} className="registrationSuccessMessage">{formData.username} Registered successfully!  You will be redirected to the login page shortly</div>
       )}
       <form className="registerForm" onSubmit={handleSubmit} >
 
