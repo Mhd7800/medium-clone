@@ -5,12 +5,32 @@ import { useState } from 'react';
 import "medium-editor/dist/css/medium-editor.css";
 import "medium-editor/dist/css/themes/beagle.css";
 import './css/index.css'
+import { selectUserId} from '../../features/userIdSlice';
+import {  useGetStoriesQuery,
+  useGetUserIdQuery,
+  useAddStorieMutation,
+  useUpdateUserMutation,
+  useUpdateStoryMutation,
+  useDeleteStoryMutation } from '../../features/api/MyApiSlice';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
 
 const Index = () => {
 
+    //const userId = useSelector(selectUserId);
     const [title, setTitle] = React.useState("");
     const [desc, setDesc] = React.useState("");
+    //alert(userId);
+    //const user = useSelector(selectUser);
+    
 
+    //const [getUserId] = useGetUserIdQuery()
+      //const[addStory] = useAddStorieMutation()
+
+    const handleSubmitStory = async () =>{
+      //addStory({title,desc})
+      
+    }
 
 
   return (
@@ -18,7 +38,7 @@ const Index = () => {
     <LandingHeader/>
     
     <div className="pub-button">
-        <button >Publish</button>
+        <button onClick={handleSubmitStory}>Publish</button>
       </div>
       <div
         style={{

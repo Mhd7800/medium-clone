@@ -57,19 +57,14 @@ function App() {
            await axios.post('http://localhost:8080/api/v1/auth/registerWithGoogle', {
             email: authUser?.email,
             name: authUser?.displayName,
-            id: authUser?.providerId,          
-            photoURL: authUser?.providerData?.photoURL,
+            //id: authUser?.UUI,          
+            photoURL: authUser.providerData[0].photoURL,
           }, {
             headers: {
               'Content-Type': 'application/json',
             },
           });
-  
-          /*if (registrationResponse.status === 201) {
-            console.log('// User registered successfully')
-          } else {
-            console.log('// Handle registration error')
-          }*/
+
         } else if (response.status === 200) {
           // User already exists, do nothing
         }
@@ -79,6 +74,11 @@ function App() {
           login({
             providerData: authUser.providerData[0],
           }));
+          /*console.log('Hi there');
+          console.log(authUser?.providerId);
+          console.log(authUser?.providerData?.photoURL);
+          console.log(authUser?.providerData?.displayName);
+          console.log(authUser.providerData[0].displayName)*/
       }
     });
   }, [dispatch]);

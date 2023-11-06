@@ -35,6 +35,8 @@ export default function AuthWithEmail() {
         try{
             const userData = await login({usernameOrEmail, password}).unwrap()
             dispatch(setCredentials({...userData, usernameOrEmail}))
+            //get user with email 
+            // set user id in the redux state
             localStorage.setItem("isAuth",true);
             SetUsernameOrEmail("")
             setPassword("")

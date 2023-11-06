@@ -1,35 +1,12 @@
-import {React, useState, useEffect} from 'react'
+import React from 'react'
 import { Avatar, Image, Popover } from 'antd'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../features/userSlice'
 import './css/ProfileInformation.css'
 import { green } from '@mui/material/colors'
-import {storage, auth} from "../../firebase"
-import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
-import {v4} from "uuid";
 
 const ProfileInformation = () => {
     const user = useSelector(selectUser);
-    const [image, setImage] = useState();
-    const [imageUrl, setImageUrl] = useState(null);
-
-    const handleImageUpload = async () =>{
-
-        if (image) {
-            const user = auth.currentUser;
-            const storageRef = storage.ref();
-            const imageRef = storageRef.child(`profilePictures/${user.uid}/${image.name}`);
-            const snapshot = await imageRef.put(image);
-            const imageUrl = await snapshot.ref.getDownloadURL();
-            setImageUrl(imageUrl);
-    }
-}
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-      };
-
 
   return (
     <div className='ProfileInformation'>
@@ -42,21 +19,14 @@ const ProfileInformation = () => {
                     src={
                         <Image
                           preview={false}
-                          src={imageUrl ?? user?.providerData?.photoURL }
+                          src={user?.providerData?.photoURL ?? 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg?w=826'}
                         />
                       }
                 ></Avatar>
             </div>
             <div className='photoInfo'>
                 <div className='photoButtons'>
-                <input
-                type="file"
-                id="imageInput"
-                accept="image/*"
-                style={{ display: 'none' }}
-                onChange={handleImageChange}
-            />
-                    <span onClick={handleImageUpload} style={{color:"green"}}>Update</span>
+                    <span style={{color:"green"}}>Update</span>
                     <span style={{color:"tomato"}}>Remove</span>
                 </div>
                 <div className='photoText'>
