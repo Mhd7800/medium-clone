@@ -35,8 +35,7 @@ export default function AuthWithEmail() {
         try {
             const response = await axios.get(`http://localhost:8080/api/v1/auth/get-user?username=${usernameOrEmail}`);
             const user = response.data;
-            const userId = user.id;
-            dispatch(setUserId(userId));
+            
         } catch (error) {
             // Handle the error
             console.error('Error fetching user:', error);

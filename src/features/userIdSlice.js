@@ -7,13 +7,13 @@ export const userIdSlice = createSlice({
   },
   reducers: {
     userId: (state, action) => {
-      state.value = action.payload; // Update to state.value
+      state.userId = action.payload;
     },
   },
 });
 
 export const { userId } = userIdSlice.actions;
 
-export const selectUserId = (state) => state.userId.value; // Update to state.userId.value
+export const selectUserId = (state) => state.userId.userId;
 
 export default userIdSlice.reducer;

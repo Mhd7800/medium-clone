@@ -33,7 +33,7 @@ function App() {
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useState()
   const [isAuth, setIsAuth]= useState(false);
-
+  
   
   const storedToken = localStorage.getItem('auth_Token');
   if (storedToken) {
@@ -57,8 +57,9 @@ function App() {
            await axios.post('http://localhost:8080/api/v1/auth/registerWithGoogle', {
             email: authUser?.email,
             name: authUser?.displayName,
-            //id: authUser?.UUI,          
-            photoURL: authUser.providerData[0].photoURL,
+            //id: authUser.providerData[0].uui,  //the id provided by firestore is a string        
+            photourl: authUser.providerData[0].photoURL,
+            
           }, {
             headers: {
               'Content-Type': 'application/json',
@@ -74,11 +75,10 @@ function App() {
           login({
             providerData: authUser.providerData[0],
           }));
-          /*console.log('Hi there');
-          console.log(authUser?.providerId);
-          console.log(authUser?.providerData?.photoURL);
-          console.log(authUser?.providerData?.displayName);
-          console.log(authUser.providerData[0].displayName)*/
+          //console.log(authUser.providerData[0].photoURL)
+          console.log(authUser)
+          //console.log(authUser.uid) //string
+          
       }
     });
   }, [dispatch]);

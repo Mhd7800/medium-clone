@@ -4,7 +4,7 @@ import userSlice from "./userSlice";
 const authSlice = createSlice({
   name: 'login',
   initialState: { 
-    user: null, token: null, userId: null }, 
+    user: null, token: null}, 
   reducers: {
     setCredentials: (state, action) => {
       const { user, accessToken } = action.payload;
@@ -15,17 +15,14 @@ const authSlice = createSlice({
     logOut: (state, action) => {
       state.user = null;
       state.token = null;
-      state.userId = null; // Clear userId when logging out
       localStorage.removeItem("auth_Token");
     },
 
-    setUserId: (state, action) => {
-      state.userId = action.payload; 
-    },
+    
   },
 });
 
-export const { setCredentials, logOut, setUserId } = authSlice.actions;
+export const { setCredentials, logOut } = authSlice.actions;
 
 export default authSlice.reducer;
 export const selectCurrentUser = (state) => state.auth.user;
