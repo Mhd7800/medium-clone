@@ -24,6 +24,7 @@ import Stories from './components/Stories/';
 import WriteStories from './components/WriteStories'
 import Stats from './components/Stats/Stats';
 import Settings from './components/Settings/Settings';
+import { userId } from './features/userIdSlice';
 
 function App() {
 
@@ -79,6 +80,32 @@ function App() {
           console.log(authUser)
           //console.log(authUser.uid) //string
           
+
+          //******get the user id ****/
+          try {
+            const response = await axios.get(`http://localhost:8080/api/v1/auth/get-user?email=${authUser.email}`, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+    
+            if (response.status === 200) {
+              // User found, update userDetails state
+              console.log(response.data.id);
+              dispatch(userId(response.data.id))
+            } else if (response.status === 404) {
+              // User not found, handle accordingly
+            }
+            /************************************** */
+           
+            dispatch(
+              login({
+                providerData: authUser.providerData[0],
+              }));
+          } catch (error) {
+            // Handle error (e.g., network error, server error)
+            console.error('Error fetching user details:', error);
+          }
       }
     });
   }, [dispatch]);

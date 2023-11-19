@@ -3,7 +3,7 @@ import { apiSlice } from './api/apiSlice';
 import { MyApiSlice } from '../features/api/MyApiSlice';
 import userReducer from "../features/userSlice"
 import authReducer from "../features/authSlice"
-import userIdSlice from '../features/userIdSlice';
+import userIdReducer from '../features/userIdSlice';
 
 
 
@@ -12,7 +12,7 @@ export const store = configureStore({
     user: userReducer,
     [apiSlice.reducer]: apiSlice.reducer,
     auth: authReducer,
-    //userId: userIdSlice.reducer,
+    userId: userIdReducer,
   },
   middleware: getDefaultMiddleware=>
     getDefaultMiddleware().concat(apiSlice.middleware),

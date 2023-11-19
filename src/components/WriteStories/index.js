@@ -20,7 +20,7 @@ const Index = () => {
     const [title, setTitle] = React.useState("");
     const [desc, setDesc] = React.useState("");
     
-    
+    const userId = useSelector(selectUserId);
     //alert(userId);
 
     //const [getUserId] = useGetUserIdQuery()
@@ -46,7 +46,7 @@ const Index = () => {
         }}
       >
         <h2>Title of the Story</h2>
-        
+        <h2>{userId}</h2>
       </div>
 
       <Editor
