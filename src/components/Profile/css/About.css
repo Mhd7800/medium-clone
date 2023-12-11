@@ -36,5 +36,48 @@
 
 .about-line {
     margin: 30px 0;
-    border-bottom: 1 px solid #dfdfdf;
+    border-bottom: 0.75 px solid #dfdfdf;
 }
+
+.DisplayAbout{
+    /*display: flex;*/
+    border-bottom: 0.75 px solid #dfdfdf;
+}
+
+.DisplayAbout button{
+    background-color: #fff;
+    border: 0.5px solid #000;
+    border-radius: 25px;
+    color: #000;
+    margin: 8px;
+}
+
+
+.editingForm{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.editingForm textarea {
+    border: none;
+  outline: none; /* Remove the default focus outline */
+  resize: none; /* Disable textarea resizing */
+  width: 100%; 
+  height: 100%;
+  padding: 10px; /* Add padding for better appearance */
+  font-size: 16px; /* Set the font size as needed */
+  margin-bottom: 50px;
+}
+
+.editingForm button {
+    background-color: #fff;
+    border: 0.5px solid #000;
+    border-radius: 25px;
+    color: #000;
+    margin: 8px;
+}
+
+
+
+

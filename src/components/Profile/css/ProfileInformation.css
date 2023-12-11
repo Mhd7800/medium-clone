@@ -33,6 +33,8 @@
 
 .userForm input{
     border: none;
+    outline: none; /* Remove the default focus outline */
+    resize: none;
     border-bottom: 1px solid #000;
 }
 

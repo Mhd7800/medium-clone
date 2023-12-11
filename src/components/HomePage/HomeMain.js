@@ -17,7 +17,7 @@ export default function
             </button>
         </div>
         <div className='home-main-animation'>
-            <img src='https://imageupload.io/ib/ob5a6mjmM2iUzBs_1697023920.jpg'></img>
+            <img src='https://drive.google.com/file/d/1YrkyukbtAk-MzHcnIuaf3_IEM2E9j9Ct/view?usp=sharing'></img>
           </div>
         </div>
         <div>

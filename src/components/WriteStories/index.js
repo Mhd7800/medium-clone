@@ -7,20 +7,30 @@ import { selectUserId } from '../../features/userIdSlice';
 import 'medium-editor/dist/css/medium-editor.css';
 import 'medium-editor/dist/css/themes/beagle.css';
 import './css/index.css';
+//import { ReadTime } from '../ReadTime';
+import ReadTime from "../ReadTime"
 
 const Index = () => {
   const userId = useSelector(selectUserId);
 
+  
+
   const [postDto, setPostDto] = useState({
     title: '',
     content: '',
+    read_time: '',
     user_id: userId, 
-    comments: [], // Initialize with an empty array or set as needed
-    categoryId: null, // Initialize with the appropriate value
+    created_date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' }),    comments: [], // Initialize with an empty array or set as needed
+    //categoryId: null, // Initialize with the appropriate value
   });
 
 
   const handleSubmitStory = async () => {
+
+    const readTime = ReadTime(postDto.content)
+    console.log(readTime);
+    setPostDto({...postDto, read_time: readTime})
+
     try {
       await axios.post('http://localhost:8080/api/v1/posts', postDto);
     } catch (error) {
