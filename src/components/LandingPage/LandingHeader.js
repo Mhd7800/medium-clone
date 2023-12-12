@@ -1,5 +1,5 @@
 import { Avatar, Image, Popover } from 'antd'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { login,logout, selectUser } from '../../features/userSlice';
@@ -7,33 +7,54 @@ import "./css/LandingHeader.css"
 import { auth } from '../../firebase';
 import { selectCurrentToken } from '../../features/authSlice';
 import { logOut } from '../../features/authSlice';
+import { selectUserId } from '../../features/userIdSlice';
+import getUserInfoById from '../getUserInfo';
 
 
-const LandingHeader = () => {
 
+const LandingHeader = ({onSave}) => {
+
+    const userId = useSelector(selectUserId);
     const [visible, setvisible] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const token = useSelector(selectCurrentToken)
+    const [userData, setUserData]= useState();
+    const [loading, setLoading] = useState(false);    
+
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const user = await getUserInfoById(userId);
+                console.log('User Data:', user);
+                setUserData(user);
+                onSave();
+            } catch (error) {
+                // Handle the error if needed
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
+        
+    }, [userId]);
+    
+      
 
 
-    /*const Title = () =>{
-        return (
-            <div className="pop-title">
-            <div className='pop-top-title-container'>
-            <Avatar
-            size={50}
-            src={<Image src={user?.providerData?.photoURL} />}
-          />
-            <div className='pop-info-name'>
-                <span>{user?.providerData?.displayName}</span>
-                <span>@{String(user?.providerData.email).split("@")[0]}</span>
-            </div>
-        </div>
-    </div>
-        )
-    }*/
+      /*useEffect(()=>{
+        const temp =  getUserInfoById(userId);
+        setUserData(temp);
+      },[])*/
+
+      console.log('photo url link :'+ userData?.photoURL)
+      console.log('the id: '+ userId)
+      console.log('the object itself: '+ userData)
+      
 
     const Content = () =>{
         return (
@@ -156,7 +177,7 @@ const LandingHeader = () => {
                                     src={
                                         <Image
                                           preview={false}
-                                          src={user?.providerData?.photoURL ?? 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg?w=826'}
+                                          src={userData?.photoURL ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}
                                         />
                                       }
                                 />

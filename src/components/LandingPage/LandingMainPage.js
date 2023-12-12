@@ -9,7 +9,7 @@ import "./css/LandingMainPage.css"
 const LandingMainPage = ({userDetails}) => {
   
     const [tab, setTab] = useState(0);
-    console.log(userDetails);
+    //console.log(userDetails);
     const [stories,setStories] = useState();
     const [users, setUsers] = useState();
     const [loading, setLoading] = useState(true);
