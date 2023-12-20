@@ -4,10 +4,12 @@ div[contenteditable="true"] {
       sans-serif;
     margin: 50px;
     min-height: 50vh;
-    border: 1px dashed lightgray;
+    border: none;
+    outline: none;
+    /*border: 1px dashed lightgray;*/
     padding: 30px;
     font-size: 18px;
-    box-shadow: 2px 4px 20px 0px lightgrey;
+    /*box-shadow: 2px 4px 20px 0px lightgrey;*/
   }
   
   pre {
@@ -41,3 +43,13 @@ div[contenteditable="true"] {
     color: #fff;
     cursor: pointer;
   }
+
+
+  .titleWrite{
+    margin-left: 50px;
+    border: none;
+    outline: none;
+    font-size: 25px;
+    width:80%
+  }
+

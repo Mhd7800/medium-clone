@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import LandingHeader from '../LandingPage/LandingHeader'
 import { Avatar, Image, Popover } from 'antd'
 import Footer from '../footer/Footer'
@@ -15,7 +15,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ProfileInformation from './ProfileInformation'
-
+import { selectUserId } from '../../features/userIdSlice'
+import axios from 'axios'
 
 const style = {
     position: 'absolute',
@@ -33,16 +34,53 @@ const style = {
 const Profile = () => {
 
 
+  const getUserInfoById = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/v1/user/${userId}`);
+      const user = response.data;
+      setUserInfo(user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+const [userInfo, setUserInfo] = useState({});
+const userId = useSelector(selectUserId);
 const user = useSelector(selectUser);
 const [open, setOpen] = React.useState(false);
-const handleOpen = () => setOpen(true);
-const handleClose = () => setOpen(false);
+const [close, setClose] = React.useState(false);
 
+
+const handleClose = () => {
+  setOpen(false)
+  setClose(true)
+};
+
+const handleOpen = async () => {
+  setOpen(true);
+};
+
+const handleCancel = () => {
+  setOpen(false);
+};
+
+const handleSaveProfile = async () => {
+  // Close the modal
+  setOpen(false);
+  // Fetch and update user information
+  await getUserInfoById();
+};
+
+console.log(userInfo)
+
+useEffect (()=>{
+  getUserInfoById();
+},[userId])
 
   return (
     <div className='profilePage'>
         <div className='profileHeader'>
-            <LandingHeader/>
+            <LandingHeader onSave={handleSaveProfile}/>
         </div>
 
     <div className='profileContainer'>
@@ -50,7 +88,7 @@ const handleClose = () => setOpen(false);
             
             <div className='profileTabElement'>
             <div className='profileName'>
-                <span>{user?.providerData?.displayName}</span>
+                <span>{userInfo.name}</span>
                 <p>...</p>
             </div>
 
@@ -82,12 +120,12 @@ const handleClose = () => setOpen(false);
                     src={
                         <Image
                           preview={false}
-                          src={user?.providerData?.photoURL ?? 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg?w=826'}
+                          src={userInfo.photoURL ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}
                         />
                       }
                 ></Avatar>
-            <h3>{user?.providerData?.displayName }</h3>
-            <p>about me</p>
+            <h3>{userInfo.name}</h3>
+            <p>{userInfo.bio}</p>
         
             <span onClick={handleOpen}>Edit profile</span>
             <Modal
@@ -101,7 +139,7 @@ const handleClose = () => setOpen(false);
             Profile Information
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        <ProfileInformation/>
+        <ProfileInformation onSave={handleSaveProfile} onCancel={handleCancel}/>
           </Typography>
         </Box>
       </Modal>

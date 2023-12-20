@@ -77,16 +77,21 @@ const About = () => {
   };
 
 
-  const handleDelete = async () => {
-    /*try {
-      // Handle delete action (send to backend, update state, etc.)
-      await axios.delete(`http://localhost:8080/api/v1/user/${userId}`);
-      setUserInfo({ ...userInfo, about: '' }); // Clear the about property
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      // Update about in the db
+      if (!userInfo.about.trim()) {
+        setError('Please provide valid information.');
+        return;
+      }
+      await axios.put(`http://localhost:8080/api/v1/user/update/${userId}`, { about: '' }, config);
+      setEditing(false); // Exit editing mode
+      setUserInfo({ ...userInfo, about: '' });
     } catch (error) {
-      console.error('Error deleting user:', error);
-      // Handle error
-      throw error;
-    }*/
+      console.error('Error:', error);
+      setError(error.message || 'An error occurred');
+    }
   };
 
   return (
@@ -96,7 +101,7 @@ const About = () => {
           {loading && <div className="loading-indicator">Loading...</div>}
           <p>{userInfo.about}</p>
           <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
+          <button onClick={handleDelete}>Clear</button>
         </div>
       )}
 

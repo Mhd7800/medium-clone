@@ -1,5 +1,5 @@
 import { Avatar, Image, Popover } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { login,logout, selectUser } from '../../features/userSlice';
@@ -7,6 +7,8 @@ import "./css/LandingHeader.css"
 import { auth } from '../../firebase';
 import { selectCurrentToken } from '../../features/authSlice';
 import { logOut } from '../../features/authSlice';
+import { selectUserId } from '../../features/userIdSlice';
+import getUserInfoById from "../getUserInfo"
 
 
 const LandingHeader = () => {
@@ -16,24 +18,24 @@ const LandingHeader = () => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const token = useSelector(selectCurrentToken)
+    const userId = useSelector(selectUserId);
+    const [userInfo, setUserInfo] = useState();
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const user = await getUserInfoById(userId);
+            setUserInfo(user);
+          } catch (error) {
+            console.error('Error fetching user by ID:', error);
+            // Handle it later
+          }
+        };
+    
+        fetchData(); // Call the async function inside useEffect
+      }, [userId]);
 
 
-    /*const Title = () =>{
-        return (
-            <div className="pop-title">
-            <div className='pop-top-title-container'>
-            <Avatar
-            size={50}
-            src={<Image src={user?.providerData?.photoURL} />}
-          />
-            <div className='pop-info-name'>
-                <span>{user?.providerData?.displayName}</span>
-                <span>@{String(user?.providerData.email).split("@")[0]}</span>
-            </div>
-        </div>
-    </div>
-        )
-    }*/
 
     const Content = () =>{
         return (
@@ -156,7 +158,7 @@ const LandingHeader = () => {
                                     src={
                                         <Image
                                           preview={false}
-                                          src={user?.providerData?.photoURL ?? 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg?w=826'}
+                                          src={userInfo?.photoURL ?? 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg?w=826'}
                                         />
                                       }
                                 />
