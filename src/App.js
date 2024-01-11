@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import LandingPage from "./components/LandingPage/index";
-import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import {BrowserRouter as Router,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Routes, Route, Navigate, RouterProvider} from "react-router-dom";
 import HomePage from './components/HomePage'
 import { useDispatch, useSelector } from 'react-redux';
 import { auth } from './firebase';
@@ -21,11 +24,15 @@ import { selectCurrentToken, selectCurrentUser, setCredentials } from './feature
 import {store} from "./app/store"
 import Profile from './components/Profile/Profile';
 import Stories from './components/Stories/';
-import WriteStories from './components/WriteStories'
+//import WriteStories from './components/WriteStories'
+import Index from './components/WriteStories';
 import Stats from './components/Stats/Stats';
 import Settings from './components/Settings/Settings';
 import { userId } from './features/userIdSlice';
 import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
+import ViewStory from './components/ViewStory/ViewStory';
+import DisplayStory, {DisplayStoryLoader} from './components/ViewStory/DisplayStory';
+
 
 function App() {
 
@@ -126,6 +133,14 @@ function App() {
           <LandingPage userDetails = {userDetails}/>
           </PrivateRoute>}
         />
+      <Route path="/story/@:encodedUserName/:encodedTitle" element={<ViewStory />} />
+      
+      
+      <Route path='/display/:encodedUserName/:encodedTitle' 
+      element={<DisplayStory/>}
+      loader={DisplayStoryLoader}
+      />
+      
 
       <Route path="/profile" 
         element={<PrivateRoute>
@@ -154,10 +169,13 @@ function App() {
             path="/new-story"
             element={
               <PrivateRoute>
-                <WriteStories/>
+                <Index/>
               </PrivateRoute>
             }
           />
+
+         
+
           <Route
             path="/me/stats"
             element={

@@ -33,14 +33,17 @@ const Index = () => {
   const userId = useSelector(selectUserId);
   const [open, setOpen] = React.useState(false);
   const [close, setClose] = React.useState(false);
+  const [read_time, setReadTime] = useState('');
 
   const handleClose = () => {
     setOpen(false)
     setClose(true)
   };
   
+
   const handleOpen = async () => {
     setOpen(true);
+    //setReadTime(ReadTime(postDto.content));
   };
   
   const handleCancel = () => {
@@ -54,23 +57,9 @@ const Index = () => {
     read_time: '',
     user_id: userId, 
     created_date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' }),    comments: [], // Initialize with an empty array or set as needed
-    //categoryId: null, // Initialize with the appropriate value
   });
 
-
   
-  const handleSubmitStory = async () => {
-
-    const readTime = ReadTime(postDto.content)
-    console.log(readTime);
-    setPostDto({...postDto, read_time: readTime})
-
-    try {
-      await axios.post('http://localhost:8080/api/v1/posts', postDto);
-    } catch (error) {
-      console.error('Error creating data:', error);
-    }
-  };
 
   return (
     <>
@@ -88,7 +77,7 @@ const Index = () => {
         <Box sx={style}>
           
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        <StoryConfirmation onSave={handleSubmitStory} onCancel={handleCancel}/>
+        <StoryConfirmation  postDto={postDto} onCancel={handleCancel}/>
           </Typography>
         </Box>
       </Modal>
@@ -97,7 +86,8 @@ const Index = () => {
           type="text"
           placeholder='Title'
           value={postDto.title}
-          onChange={(e) => setPostDto({ ...postDto, title: e.target.value })}
+          onChange={(e) => setPostDto({ ...postDto, title: e.target.value, read_time: ReadTime(postDto.content) })}
+
         />
 
       <div

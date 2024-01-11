@@ -1,0 +1,18 @@
+.storyPublishedWrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.storyPublishedUpper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    border-bottom: 1 px solid ;
+}
+
+.storyPublishedBottom{
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+}
