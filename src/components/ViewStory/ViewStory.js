@@ -13,7 +13,7 @@ import moment from 'moment';
 import { AuthModal } from "../HomePage/Modal/AuthModal"
 import { useParams, useNavigate } from "react-router-dom"
 import { Avatar, Spin, Tooltip } from 'antd';
-import getUserInfoById from "../getUserInfo"
+import getUserInfoById from "../getUserInfo";
 
 
 const ViewStory = () => {

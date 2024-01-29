@@ -138,7 +138,6 @@ function App() {
       
       <Route path='/display/:encodedUserName/:encodedTitle' 
       element={<DisplayStory/>}
-      loader={DisplayStoryLoader}
       />
       
 

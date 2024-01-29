@@ -1,37 +1,33 @@
-import { Skeleton } from 'antd';
-import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
-import LandingRecommendedPost from "./LandingRecommendedPost "
-import "./css/LandingMainPage.css"
+import { Avatar } from "antd";
+import React from "react";
 
 
-const WhoToFollow = ({userDetails})=> {
-
-    const [tab, setTab] = useState(0);
-    console.log(userDetails);
-    const [stories,setStories] = useState();
-    const [users, setUsers] = useState();
-    const [loading, setLoading] = useState(true);
-    const [userLoading, setUserLoading] = useState(true);
-
-
+const WhoToFollow = ({ data }) => {
   return (
-    <div className='follow'>
-    <h4>Who to follow</h4>
-    {users?.map((data) => (
-    <WhoToFollow key={data?._id} data={data} />
-    ))}
-    {[...Array(5)].map((_, idx) => {
-    return (
-        <>
-        {userLoading && (
-            <Skeleton key={idx} active avatar paragraph={{ rows: 1 }} />
-        )}
-        </>
-    );
-    })}
-</div>
-  )
-}
+    <div className="follow-content">
+      <Avatar
+        size={40}
+        // round={true}
+        src={data?.photoURL}
+      />
+      <div className="info">
+        <h3>{truncate(String(data?.name), 15)}</h3>
+        <span>@{String(data?.email).split("@")[0]}</span>
+      </div>
+      <button
+        style={{
+          marginLeft: "auto",
+        }}
+      >
+        Follow
+      </button>
+    </div>
+  );
+};
 
-export default WhoToFollow
+export default WhoToFollow;
+
+
+export function truncate(str, n) {
+  return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+}
