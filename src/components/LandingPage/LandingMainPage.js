@@ -11,13 +11,17 @@ import getUserInfoById from '../getUserInfo';
 import axios from 'axios';
 import Test from './Test';
 import { Tabs } from 'antd';
+const { TabPane } = Tabs;
 
 
 
 
 const LandingMainPage = () => {
   
-    const [tab, setTab] = useState(0);
+    //const [tab, setTab] = useState(0);
+    const [popularTopics, setPopularTopics] = useState([]); //testing
+    const [selectedTopic, setSelectedTopic] = useState(null); //testing
+    const [topicPosts, setTopicPosts] = useState([]); //testing
     const user = useSelector(selectUser);
     const userId = useSelector(selectUserId);
     const [stories,setStories] = useState([]);
@@ -25,10 +29,11 @@ const LandingMainPage = () => {
     const [loading, setLoading] = useState(true);
     const [userLoading, setUserLoading] = useState(true);
     const [userDetails, setUserDetails] = useState();
+    const topicIndex = 0;
 
-    const onChange = (key: string) => {
+    /*const onChange = (key: string) => {
         console.log(key);
-      };
+      };*/
       
     
     
@@ -77,13 +82,46 @@ const LandingMainPage = () => {
         getUsers();
       }, [userDetails]);
     
+      const topics = [
+        'Fashion', 'Beauty', 'Travel', 'Lifestyle', 'Personal', 'Tech', 'Health',
+        'Fitness', 'Wellness', 'SaaS', 'Business', 'Education', 'Food and Recipe',
+        'Love and Relationships', 'Alternative topics', 'Green living', 'Music',
+        'Automotive', 'Marketing', 'Internet services', 'Finance', 'Sports',
+        'Entertainment', 'Productivity', 'Hobbies', 'Parenting', 'Pets', 'Photography', 'Agriculture'
+      ];
+
+      useEffect(() => {
+        // Fetch popular topics from the server
+        axios.get('http://localhost:8080/api/v1/posts/popular-topics')
+          .then(response => {
+            setPopularTopics(response.data.slice(0, 5)); // Assuming the API returns an array of popular topics
+          })
+          .catch(error => {
+            console.error('Error fetching popular topics:', error);
+          });
+      }, []);
+    
+      const handleTabChange = topic => {
+        // Fetch posts for the selected topic
+        axios.get(`http://localhost:8080/api/v1/posts/topics/${topic}`)
+          .then(response => {
+            console.log(`Fetched posts for ${topic}:`, response.data); // Debugging
+            setTopicPosts(response.data); // Assuming the API returns an array of posts for the selected topic
+            setSelectedTopic(topic);
+            console.log('selected topic : '+ topic) 
+          })
+          .catch(error => {
+            console.error(`Error fetching posts for ${topic}:`, error);
+          });
+      };
+      
 
 
   
     return (
     <div className='landing-main'>
         <div className='landing-main-container'>
-            <div className='landing-main-left'>
+            {/*<div className='landing-main-left'>
             <Tabs
             defaultActiveKey="1"
             onChange={onChange}
@@ -91,9 +129,23 @@ const LandingMainPage = () => {
             {
                 label: `For you`,
                 key: '1',
-                children: `For you content
-               
-                  `,
+                children: (
+                  <div>
+    {
+                    stories?.length > 0 ? (
+                      stories.map((data) => (
+                        <LandingRecommendedPost
+                          key={data.id} // Use a unique identifier
+                          story={data}
+                        />
+                      ))
+                    ) : (
+                      <p>No stories available.</p>
+                    
+                 )
+                  }   
+             </div>                     
+                ),
             },
             {
                 label: `Tab 2`,
@@ -107,33 +159,35 @@ const LandingMainPage = () => {
             },
             ]}
         />
-    <h2>This is the for you page</h2>
-    <div>
-    {
-                    stories?.length > 0 ? (
-                      stories.map((data) => (
-                        <LandingRecommendedPost
-                          key={data.id} // Use a unique identifier
-                          stories={data}
-                        />
-                      ))
-                    ) : (
-                      <p>No stories available.</p>
-                    
-                 )
-                  }   
-    </div>                           
-            </div>
+          
+          </div>*/}
+          <Tabs defaultActiveKey={popularTopics[0]} onChange={handleTabChange}>
+            {popularTopics.map(topic => (
+              <TabPane tab={topic} key={topic}>
+                {selectedTopic === topic ? (
+                  topicPosts.map(post => (
+                    <LandingRecommendedPost
+                      key={post.id}
+                      story={post}
+                    />
+                  ))
+                ) : (
+                  <Skeleton active />
+                )}
+              </TabPane>
+            ))}
+          </Tabs>
+
             <div className='landing-main-right'>
                     <div className='recommended-topics'>
                         <h2>Recommended topics</h2>
                         <div className='topic'>
-                            <span>Technology</span>
-                            <span>Money</span>
-                            <span>Business</span>
-                            <span>Productivity</span>
-                            <span>Pychology</span>
-                            <span>Art</span>
+                          
+                        {popularTopics.map((topic, index) => (
+                            <span key={index}>{topic}</span>
+                          ))}
+                       
+                           
                         </div>
                     </div>
                   <div className='follow'>

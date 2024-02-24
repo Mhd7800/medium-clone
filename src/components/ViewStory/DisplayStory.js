@@ -11,6 +11,8 @@ import ReactHTMLparser from "react-html-parser";
 import moment from 'moment';
 import LandingHeader from '../LandingPage/LandingHeader'
 import HomeHeader from '../HomePage/HomeHeader'
+import Alert from '@mui/material/Alert';
+
 
 
 
@@ -23,6 +25,8 @@ const DisplayStory = () => {
   const [loading, setLoading] = useState(false)
   const [singleB, setSingleB] = useState();
   const [userDetails, setUserDetails] = useState();
+  const [successMessageVisible, setSuccessMessageVisible] = useState(false);
+
 
 
 
@@ -34,6 +38,24 @@ const DisplayStory = () => {
   
   },[userId])
 
+
+    const addToList = async () => {
+      try {
+        // Send a POST request to your backend endpoint to save the post
+        await axios.post(`http://localhost:8080/api/v1/user/${userId}/addPostToList/${singleB.id}`);
+        setSuccessMessageVisible(true); 
+        setTimeout(() => {
+          setSuccessMessageVisible(false); // Hide the success message after 1 second
+        }, 1000);
+        console.log('Post saved successfully');
+      } catch (error) {
+        // Handle any errors that occur during the request
+        console.error('Error saving post:', error);
+      }
+    };
+  
+    
+    
 
   
 
@@ -55,9 +77,7 @@ const DisplayStory = () => {
     fetchData();
   }, [encodedTitle]);
 
-  const addToList = (()=>{
-
-  })
+  
 
   return (
 
@@ -125,7 +145,11 @@ const DisplayStory = () => {
                 )
             }
         <div className="singleBlog__body">
+        {successMessageVisible && (
+      <Alert severity="success">Successfully saved to user List.</Alert>
+    )}
           {ReactHTMLparser(singleB?.content)}
+          
         </div>
   </div>          
   </Spin>
