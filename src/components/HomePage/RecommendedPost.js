@@ -1,151 +1,164 @@
-import React from 'react'
+import React, {useEffect, useState}from 'react'
+import ReactHTMLparser from "react-html-parser";
+
+
 
 export default function RecommendedPost() {
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/posts?pageNo=0&pageSize=6`);
+            if (response.ok) {
+                const data = await response.json();
+                setPosts(data.content); 
+            } else {
+                console.error('Failed to fetch posts');
+            }
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
+
+    const getFirstTenWords = (content) => {
+        // Split the content into words
+        const words = content.split(' ');
+        // Select the first 10 words
+        const firstTenWords = words.slice(0, 10).join(' ');
+        return firstTenWords;
+    };
+
+    const getFirstFiveWords = (title) => {
+        // Split the content into words
+        const words = title.split(' ');
+        // Select the first 10 words
+        const firstFiveWords = words.slice(0, 5).join(' ');
+        return firstFiveWords;
+    };
+
+
+
   return (
-    <div className='post'>
-        <div className='post-container'>
+
+        <div className='recommended-post-wrapper'>
+        <div className='post-wrapper'>
         <div className='post-top'>
-        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M384 160c-17.7 0-32-14.3-32-32s14.3-32 32-32H544c17.7 0 32 14.3 32 32V288c0 17.7-14.3 32-32 32s-32-14.3-32-32V205.3L342.6 374.6c-12.5 12.5-32.8 12.5-45.3 0L192 269.3 54.6 406.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160c12.5-12.5 32.8-12.5 45.3 0L320 306.7 466.7 160H384z"/></svg>
-        <span>Trending on medium</span>
+        <img src='https://firebasestorage.googleapis.com/v0/b/medium-clone-3c1d7.appspot.com/o/images%2Ftrend-up-square-svgrepo-com.png?alt=media&token=e82b211b-32da-4779-8bed-987bc1e6cb00'>
+        </img>
+        <span>Trending on Medium</span>
         </div>
-        <div className='rcm-post-wrapper'>
-            <div className='rcm-post-container'>
-                <div className='rcm-posts'>
-                    <div className='rcm-post'>
+        <div className='post-container'>
+
+            {posts.map((post, index)=>(
+
+            
+            <div key={index} className='rcm-post-container'>
                         <div className='rcm-post-left'>
                             <span>
-                                1
+                              {index+1}
                             </span>
                         </div>
                         <div className='rcm-post-right'>
+                        <div className='rcm-post-top'>
+                        <img src="https://cdn-images-1.medium.com/fit/c/45/45/1*OdaLifs02To5Yibe8Pgrwg.png" class="avatar-image u-size36x36 u-xs-size32x32" alt="Go to the profile of The Bold Italic">
+                            </img>
+                            <span>{getFirstFiveWords(post.title)}</span>
+                        </div>
                         <div className='rcm-post-content'>
+                        <span>{ReactHTMLparser(getFirstTenWords(post.content))}</span>
+                        </div>
+                        <div className='rcm-post-footer'>
+                            <span>{post.created_date} | {post.read_time} min read</span>
+                        </div>
+                    </div>
+                </div>
+                ))}
+                {/*<div className='rcm-post-container'>
+                        <div className='rcm-post-left'>
+                            <span>
+                               01
+                            </span>
+                        </div>
+                        <div className='rcm-post-right'>
                         <div className='rcm-post-top'>
                         <img src="https://cdn-images-1.medium.com/fit/c/45/45/1*OdaLifs02To5Yibe8Pgrwg.png" class="avatar-image u-size36x36 u-xs-size32x32" alt="Go to the profile of The Bold Italic">
                             </img>
                             <span>The Bold Italic</span>
                         </div>
-                        <div className='content'>
-                            <p>The real crime in San Francisco: Fashion</p>
+                        <div className='rcm-post-content'>
+                            <span>The real crime in San Francisco: Fashion</span>
                         </div>
-                        <div className='footer'>
+                        <div className='rcm-post-footer'>
                             <span>21.09.2023 | 2 min read</span>
                         </div>
                     </div>
                 </div>
-
-        </div>
-        <div className='rcm-post'>
+                <div className='rcm-post-container'>
                         <div className='rcm-post-left'>
                             <span>
-                                1
+                               01
                             </span>
                         </div>
                         <div className='rcm-post-right'>
-                        <div className='rcm-post-content'>
                         <div className='rcm-post-top'>
-                            <img src={"https://img.icons8.com/?size=50&id=23264&format=png"} alt='logo'/>
-                            <span>Usermame Blog</span>
+                        <img src="https://cdn-images-1.medium.com/fit/c/45/45/1*OdaLifs02To5Yibe8Pgrwg.png" class="avatar-image u-size36x36 u-xs-size32x32" alt="Go to the profile of The Bold Italic">
+                            </img>
+                            <span>The Bold Italic</span>
                         </div>
-                        <div className='content'>
-                            <p>This is the title of the blog</p>
+                        <div className='rcm-post-content'>
+                            <span>The real crime in San Francisco: Fashion</span>
                         </div>
-                        <div className='footer'>
+                        <div className='rcm-post-footer'>
                             <span>21.09.2023 | 2 min read</span>
                         </div>
                     </div>
                 </div>
-
-        </div>
-        <div className='rcm-post'>
+                <div className='rcm-post-container'>
                         <div className='rcm-post-left'>
                             <span>
-                                1
+                               01
                             </span>
                         </div>
                         <div className='rcm-post-right'>
-                        <div className='rcm-post-content'>
                         <div className='rcm-post-top'>
-                            <img src={"https://img.icons8.com/?size=50&id=23264&format=png"} alt='logo'/>
-                            <span>Usermame Blog</span>
+                        <img src="https://cdn-images-1.medium.com/fit/c/45/45/1*OdaLifs02To5Yibe8Pgrwg.png" class="avatar-image u-size36x36 u-xs-size32x32" alt="Go to the profile of The Bold Italic">
+                            </img>
+                            <span>The Bold Italic</span>
                         </div>
-                        <div className='content'>
-                            <p>This is the title of the blog</p>
+                        <div className='rcm-post-content'>
+                            <span>The real crime in San Francisco: Fashion</span>
                         </div>
-                        <div className='footer'>
+                        <div className='rcm-post-footer'>
                             <span>21.09.2023 | 2 min read</span>
                         </div>
                     </div>
                 </div>
-
-        </div>
-        <div className='rcm-post'>
+                <div className='rcm-post-container'>
                         <div className='rcm-post-left'>
                             <span>
-                                1
+                               01
                             </span>
                         </div>
                         <div className='rcm-post-right'>
-                        <div className='rcm-post-content'>
                         <div className='rcm-post-top'>
-                            <img src={"https://img.icons8.com/?size=50&id=23264&format=png"} alt='logo'/>
-                            <span>Usermame Blog</span>
+                        <img src="https://cdn-images-1.medium.com/fit/c/45/45/1*OdaLifs02To5Yibe8Pgrwg.png" class="avatar-image u-size36x36 u-xs-size32x32" alt="Go to the profile of The Bold Italic">
+                            </img>
+                            <span>The Bold Italic</span>
                         </div>
-                        <div className='content'>
-                            <p>This is the title of the blog</p>
+                        <div className='rcm-post-content'>
+                            <span>The real crime in San Francisco: Fashion</span>
                         </div>
-                        <div className='footer'>
+                        <div className='rcm-post-footer'>
                             <span>21.09.2023 | 2 min read</span>
                         </div>
                     </div>
-                </div>
+  </div>*/}
 
-        </div>
-        <div className='rcm-post'>
-                        <div className='rcm-post-left'>
-                            <span>
-                                1
-                            </span>
-                        </div>
-                        <div className='rcm-post-right'>
-                        <div className='rcm-post-content'>
-                        <div className='rcm-post-top'>
-                            <img src={"https://img.icons8.com/?size=50&id=23264&format=png"} alt='logo'/>
-                            <span>Usermame Blog</span>
-                        </div>
-                        <div className='content'>
-                            <p>This is the title of the blog</p>
-                        </div>
-                        <div className='footer'>
-                            <span>21.09.2023 | 2 min read</span>
-                        </div>
-                    </div>
-                </div>
-
-        </div>
-        <div className='rcm-post'>
-                        <div className='rcm-post-left'>
-                            <span>
-                                1
-                            </span>
-                        </div>
-                        <div className='rcm-post-right'>
-                        <div className='rcm-post-content'>
-                        <div className='rcm-post-top'>
-                            <img src={"https://img.icons8.com/?size=50&id=23264&format=png"} alt='logo'/>
-                            <span>Usermame Blog</span>
-                        </div>
-                        <div className='content'>
-                            <p>This is the title of the blog</p>
-                        </div>
-                        <div className='footer'>
-                            <span>21.09.2023 | 2 min read</span>
-                        </div>
-                    </div>
-                </div>
-
-        </div>
-        </div>
-    </div>
     </div>
     </div>
     </div>

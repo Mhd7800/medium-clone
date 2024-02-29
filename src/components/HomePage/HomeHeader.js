@@ -3,7 +3,6 @@ import { AuthModal } from './Modal/AuthModal';
 import { Link, useLocation } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 
-
 export default function HomeHeader() {
 
     const location = useLocation();
@@ -18,11 +17,11 @@ export default function HomeHeader() {
         setIsOpen(true)
     }
     
-    const [navColor, setnavColor] = useState("#FF9900");
-    const [buttonColor, setButtonColor] = useState("#FF9900");
+    const [navColor, setnavColor] = useState("#f5c906");
+    const [buttonColor, setButtonColor] = useState("#f5c906");
 
     const listenScrollEvent = () =>{
-        window.scrollY > 350 ? setnavColor("#fff") : setnavColor("#FF9900");
+        window.scrollY > 350 ? setnavColor("#fff") : setnavColor("#f5c906");
         window.scrollY > 350 ? setButtonColor("rgb(26, 137, 23)") : setButtonColor("#000");
     }
 

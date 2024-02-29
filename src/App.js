@@ -50,6 +50,8 @@ function App() {
     store.dispatch(setCredentials({ user: null, accessToken: storedToken }));
   }
 
+  
+
 
   useEffect(() => {
     auth.onAuthStateChanged(async (authUser) => {
@@ -85,10 +87,8 @@ function App() {
             providerData: authUser.providerData[0],
           }));
           //console.log(authUser.providerData[0].photoURL)
-          console.log(authUser)
           //console.log(authUser.uid) //string
           
-
           //******get the user id ****/
           try {
             const response = await axios.get(`http://localhost:8080/api/v1/auth/get-user?email=${authUser.email}`, {
@@ -99,6 +99,8 @@ function App() {
     
             if (response.status === 200) {
               // User found, update userDetails state
+              //console.log('access token '+authUser.accessToken)
+              //console.log('refresh token '+authUser.refreshToken)
               console.log(response.data.id);
               dispatch(userId(response.data.id))
             } else if (response.status === 404) {

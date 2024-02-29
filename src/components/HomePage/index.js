@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import HomeHeader from '../HomePage/HomeHeader'
-import '../css/index.css'
+import './homecss/index.css'
 import HomeMain from '../HomePage/HomeMain'
 import RecommendedPost from '../HomePage/RecommendedPost'
 import { signInWithPopup } from "firebase/auth";

@@ -3,7 +3,7 @@
     width: 100%;
     margin-bottom: 20px;
     cursor: pointer;
-    border-bottom: 1px solid #999;
+    border-bottom: 0.5px solid #e3dfdf;
   }
   
   .landing-recommended-post-container {
@@ -21,13 +21,15 @@
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    
   }
   
   .landing-top > img {
-    width: 20px;
-    object-fit: contain;
-    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
     margin-right: 10px;
+    border-radius: 50px;
   }
   
   .landing-top > span {
@@ -37,7 +39,7 @@
   
   .landing-content {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 18px;
     flex: 1;
   }
   
@@ -56,5 +58,5 @@
   
   h1 {
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 450;
   }

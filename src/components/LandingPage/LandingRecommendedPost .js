@@ -1,4 +1,5 @@
 import React , {useEffect, useState} from 'react'
+import { Avatar, Button, Image, Popover } from 'antd'
 import { Tooltip } from "antd";
 import { truncate } from './WhoToFollow'
 import moment from "moment";
@@ -7,14 +8,27 @@ import reactHtmlParser from "react-html-parser";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import getUserInfoById from '../getUserInfo';
+import { colors } from '@mui/material';
+import { light } from '@mui/material/styles/createPalette';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../features/userSlice';
+import { selectUserId } from '../../features/userIdSlice';
+
 
 export default function LandingRecommendedPost ({ story }) {
 
 
+  const user = useSelector(selectUser);
+  const Id = useSelector(selectUserId);
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState();
   const userId = story?.user_id;
+  const [open, setOpen] = useState(false);
 
+
+  const notify = () => toast("Story saved sucessfully!");
 
   useEffect(()=>{
     getUserInfoById(userId)
@@ -24,19 +38,36 @@ export default function LandingRecommendedPost ({ story }) {
   
   },[userId])
 
+  const handleOpenChange = (newOpen) => {
+    setOpen(newOpen);
+  };
 
-  const addToList = async(postId) => {
-    /*axios.post(`/api/users/${userId}/addPostToList/${postId}`)
-    .then(response => {
-        console.log(response.data);
-        // Handle success (e.g., show a success message)
-    })
-    .catch(error => {
-        console.error(error);
-        // Handle error (e.g., show an error message)
-    });*/
+  const addToList = async() => {
+    try {
+      // Send a POST request to your backend endpoint to save the post
+      await axios.post(`http://localhost:8080/api/v1/user/${Id}/addPostToList/${story.id}`);
+      notify()
+      console.log('Post saved successfully');
+    } catch (error) {
+      // Handle any errors that occur during the request
+      console.error('Error saving post:', error);
+    }
   }
 
+  const styles = {
+    color: '#999',
+    fontWeight: 400
+  }
+
+  const contentStyle = {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    fontSize: 16,
+    fontWeight: 400
+  };
 
   return (
     <div className="landing-recommended-post">
@@ -46,22 +77,27 @@ export default function LandingRecommendedPost ({ story }) {
         {userInfo && (
               <>
                 <img src={userInfo.photoURL} alt="logo" />
-                <span>{userInfo.name}</span>
+                <span>{userInfo.name} {`  `}</span> 
+                <span style={styles}>  ·  {story?.created_date}</span>
               </>
             )}
         </div>
         <div className="landing-content">
           <Link to = {`/display/${userInfo?.name}/${reactHtmlParser(story?.title)}`}>{reactHtmlParser(story?.title)}</Link>
-          
           { story?.title } 
+          <div style={contentStyle}>
+            {reactHtmlParser(story?.content)}
+          </div>
         </div>
         <div className="landing-footer">
           <span>
-           {story?.created_date} . {story?.read_time} min read . {story?.topic}
+          {story?.topic} . {story?.read_time} min read 
           </span>
           <div className="icons">
+          <ToastContainer />
             <Tooltip title="Save">
               <span onClick={() => addToList(story?.id)}>
+                
                 <svg
                   width="25"
                   height="25"
@@ -75,15 +111,27 @@ export default function LandingRecommendedPost ({ story }) {
                   ></path>
                 </svg>
               </span>
+              
             </Tooltip>
-            <span>
+            <Popover 
+            content={<a>Follow Author</a>}
+            placement="bottom"
+            trigger="click"
+            open={open}
+            onOpenChange={handleOpenChange}
+            >
+            
+              <Button>
               <svg class="eh el py" width="25" height="25">
                 <path
                   d="M5 12.5c0 .55.2 1.02.59 1.41.39.4.86.59 1.41.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41A1.93 1.93 0 0 0 7 10.5c-.55 0-1.02.2-1.41.59-.4.39-.59.86-.59 1.41zm5.62 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41a1.93 1.93 0 0 0-1.41-.59c-.55 0-1.03.2-1.42.59-.39.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.43.59.56 0 1.03-.2 1.42-.59.39-.39.58-.86.58-1.41 0-.55-.2-1.02-.58-1.41a1.93 1.93 0 0 0-1.42-.59c-.56 0-1.04.2-1.43.59-.39.39-.58.86-.58 1.41z"
                   fillRule="evenodd"
                 ></path>
               </svg>
-            </span>
+              </Button>
+            
+            </Popover>
+            
           </div>
         </div>
       </div>
