@@ -3,6 +3,7 @@ import './css/About.css';
 import { useSelector } from 'react-redux';
 import { selectUserId } from '../../features/userIdSlice';
 import axios from 'axios';
+import getUserInfoById from '../getUserInfo';
 
 
 const About = () => {
@@ -17,7 +18,8 @@ const About = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        await getUserInfoById();
+        const user = await getUserInfoById(userId)
+        setUserInfo(user);
       } catch (error) {
         setError(error.message || 'An error occurred');
       } finally {
@@ -28,19 +30,7 @@ const About = () => {
     fetchData();
   }, [userId]);
 
- 
 
-  const getUserInfoById = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/api/v1/user/${userId}`);
-      const user = response.data;
-      setUserInfo(user);
-    } catch (error) {
-      //console.error('Error fetching user by ID:', error);
-      // Handle error
-      throw error;
-    }
-  };
 
   const handleEdit = () => {
     setEditing(true);
@@ -77,22 +67,17 @@ const About = () => {
   };
 
 
-  const handleDelete = async (e) => {
-    e.preventDefault();
+  const handleClearAbout = async () => {
     try {
-      // Update about in the db
-      if (!userInfo.about.trim()) {
-        setError('Please provide valid information.');
-        return;
-      }
+      // Update about information in the db by sending an empty string
       await axios.put(`http://localhost:8080/api/v1/user/update/${userId}`, { about: '' }, config);
-      setEditing(false); // Exit editing mode
-      setUserInfo({ ...userInfo, about: '' });
+      setUserInfo({ ...userInfo, about: '' }); // Clear the about property
     } catch (error) {
       console.error('Error:', error);
       setError(error.message || 'An error occurred');
     }
   };
+  
 
   return (
     <div>
@@ -101,7 +86,7 @@ const About = () => {
           {loading && <div className="loading-indicator">Loading...</div>}
           <p>{userInfo.about}</p>
           <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Clear</button>
+          <button onClick={handleClearAbout}>Clear</button>
         </div>
       )}
 

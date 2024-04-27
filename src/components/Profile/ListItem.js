@@ -3,9 +3,35 @@ import "./css/profile.css"
 import { Avatar, Image, Popover } from 'antd'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../features/userSlice'
+import { selectUserId } from '../../features/userIdSlice'
+import getUserInfoById from '../getUserInfo'
+import { useState, useEffect } from 'react'
+
 
 const ListItem = () => {
     const user = useSelector(selectUser);
+    const userId = useSelector(selectUserId);
+    const [userData, setUserData]= useState();
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      const fetchData = async () => {
+          try {
+              setLoading(true);
+              const user = await getUserInfoById(userId);
+              console.log('User Data:', user);
+              setUserData(user);
+          } catch (error) {
+              // Handle the error if needed
+          } finally {
+              setLoading(false);
+          }
+      };
+  
+      fetchData();
+  }, [userId]);
+    
+
 
   return (
     <div className='profileListItem'>
@@ -17,11 +43,11 @@ const ListItem = () => {
                     src={
                         <Image
                           preview={false}
-                          src={user?.providerData?.photoURL ?? 'http://www.gravatar.com/avatar/a16a38cdfe8b2cbd38e8a56ab93238d3'}
+                          src={userData?.photoURL ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}
                         />
                       }
                 ></Avatar>
-                <span>{user?.providerData?.displayName}</span>
+                <span>{userData?.name}</span>
                 </div>
                 <h3>Reading List 🔒</h3>
                 <div className='profileleftItemBottom'>

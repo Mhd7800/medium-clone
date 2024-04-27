@@ -18,6 +18,7 @@ const { TabPane } = Tabs;
 
 const LandingMainPage = () => {
   
+
     //const [tab, setTab] = useState(0);
     const [popularTopics, setPopularTopics] = useState([]); //testing
     const [selectedTopic, setSelectedTopic] = useState(null); //testing
@@ -26,6 +27,11 @@ const LandingMainPage = () => {
     const userId = useSelector(selectUserId);
     const [stories,setStories] = useState([]);
     const [users, setUsers] = useState([]);
+    const [tab, setTab] = useState(0);
+    //console.log(userDetails);
+    const [stories,setStories] = useState();
+    const [users, setUsers] = useState();
+
     const [loading, setLoading] = useState(true);
     const [userLoading, setUserLoading] = useState(true);
     const [userDetails, setUserDetails] = useState();
