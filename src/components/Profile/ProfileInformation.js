@@ -7,17 +7,17 @@ import { selectUserId } from '../../features/userIdSlice';
 import axios from 'axios';
 import { storage } from '../../firebase';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { selectUser_id } from '../../features/authSlice';
 
 const ProfileInformation = ({onSave, onCancel}) => {
-
 
   const [userInfo, setUserInfo] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const userId = useSelector(selectUserId);
+  const user_id =  useSelector(selectUser_id);
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
-
 
   const deleteImage = async(image) => {
     try {
@@ -40,7 +40,7 @@ const ProfileInformation = ({onSave, onCancel}) => {
       userInfo.photoURL = null;
       
       // Clear the photoURL in user information
-      await axios.put(`http://localhost:8080/api/v1/user/${userId}`, {
+      await axios.put(`http://localhost:8080/api/v1/user/${userId || user_id}`, {
         ...userInfo,
         //photoURL: null
       });
@@ -64,12 +64,12 @@ const ProfileInformation = ({onSave, onCancel}) => {
     try {
       setLoading(true);
 
-      const imageRef = ref(storage, `images/${userId}/${file.name}`);
+      const imageRef = ref(storage, `images/${userId || user_id}/${file.name}`);
       await uploadBytes(imageRef, file);
 
       const imageUrl = await getDownloadURL(imageRef);
 
-      await axios.put(`http://localhost:8080/api/v1/user/${userId}`, {
+      await axios.put(`http://localhost:8080/api/v1/user/${userId || user_id}`, {
         ...userInfo,
         photoURL: imageUrl,
       });
@@ -101,7 +101,7 @@ const ProfileInformation = ({onSave, onCancel}) => {
         photoURL: url !== null ? url : userInfo.photoURL,
       };
 
-      await axios.put(`http://localhost:8080/api/v1/user/${userId}`, updatedUserInfo);
+      await axios.put(`http://localhost:8080/api/v1/user/${userId || user_id}`, updatedUserInfo);
       onSave();
     } catch (error) {
       setError(error.message || 'An error occurred');
@@ -120,11 +120,11 @@ const ProfileInformation = ({onSave, onCancel}) => {
     };
 
     fetchData();
-  }, [userId]);
+  }, [userId || user_id]);
 
   const getUserInfoById = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/user/${userId}`);
+      const response = await axios.get(`http://localhost:8080/api/v1/user/${userId || user_id}`);
       const user = response.data;
       setUserInfo(user);
     } catch (error) {

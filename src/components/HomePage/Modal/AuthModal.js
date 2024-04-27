@@ -4,6 +4,7 @@ import { render } from "react-dom";
 import {Modal} from 'antd'
 import React from 'react'
 import { useState } from "react";
+import {app} from "../../../firebase"
 import './css/AuthModal.css'
 import { signInWithPopup } from 'firebase/auth'
 import {auth, provider } from '../../../firebase'
@@ -14,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import {toast} from "react-toastify";
 import { Link } from "react-router-dom";
+
           
 export const AuthModal = ({isOpen, handleCancel, handleOk}) =>{
   
@@ -23,6 +25,7 @@ export const AuthModal = ({isOpen, handleCancel, handleOk}) =>{
     const [password, setPassword] = useState('');
     const [profilePic, setProfilePic] = useState('');
     const [name, setName] = useState('');
+    
     
     //works fine
    /* const signIn = async() =>{
@@ -49,6 +52,8 @@ export const AuthModal = ({isOpen, handleCancel, handleOk}) =>{
           })
         );*/
         navigate("/");
+        //firebase.auth().setPersistence('local')
+        localStorage.setItem("isLoggedIn", true);
       })
       .catch((err) => {
         alert(err);

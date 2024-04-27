@@ -17,6 +17,9 @@ import Modal from '@mui/material/Modal';
 import ProfileInformation from './ProfileInformation'
 import { selectUserId } from '../../features/userIdSlice'
 import axios from 'axios'
+import Home from './Home'
+import { selectUser_id } from '../../features/authSlice'
+
 
 const style = {
     position: 'absolute',
@@ -31,12 +34,20 @@ const style = {
   };
 
 
+const [userInfo, setUserInfo] = useState({});
+const userId = useSelector(selectUserId);
+const user_id = useSelector(selectUser_id);
+const user = useSelector(selectUser);
+const [open, setOpen] = React.useState(false);
+const [close, setClose] = React.useState(false);
+const [posts, setPosts] = useState([]);
+//const user_id = useSelector(selectUser_id);
+
+
 const Profile = () => {
-
-
   const getUserInfoById = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/user/${userId}`);
+      const response = await axios.get(`http://localhost:8080/api/v1/user/${userId || user_id}`);
       const user = response.data;
       setUserInfo(user);
     } catch (error) {
@@ -44,11 +55,22 @@ const Profile = () => {
     }
   };
 
-const [userInfo, setUserInfo] = useState({});
-const userId = useSelector(selectUserId);
-const user = useSelector(selectUser);
-const [open, setOpen] = React.useState(false);
-const [close, setClose] = React.useState(false);
+
+
+useEffect(() => {
+  const fetchPosts = async () => {
+    try {
+      // Update the URL to match your API endpoint
+      const response = await axios.get(`http://localhost:8080/api/v1/posts/getPostByUserId/${userId || user_id}`);
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      // Handle the error according to your application's needs
+    }
+  };
+
+  fetchPosts();
+}, [userId || user_id]);
 
 
 const handleClose = () => {
@@ -71,11 +93,8 @@ const handleSaveProfile = async () => {
   await getUserInfoById();
 };
 
-console.log(userInfo)
 
-useEffect (()=>{
-  getUserInfoById();
-},[userId])
+
 
   return (
     <div className='profilePage'>
@@ -95,9 +114,16 @@ useEffect (()=>{
                 <Tabs>
                     <TabList>
                     <Tab>Home</Tab>
+                    <Tab>List</Tab>
                     <Tab>About</Tab>
                     </TabList>
 
+                    <TabPanel>
+                    {posts.map(post=>(
+                          <Home post={post} userDetails={userInfo}/>
+                        ))
+                     } 
+                    </TabPanel>
                     <TabPanel>
                     <ListItem/>
                     </TabPanel>
@@ -120,8 +146,9 @@ useEffect (()=>{
                     src={
                         <Image
                           preview={false}
-                          src={userInfo.photoURL ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}
+                          src={userInfo.photoURL ?? 'https://img.icons8.com/material-outlined/24/user--v1.png'}
                         />
+                        
                       }
                 ></Avatar>
             <h3>{userInfo.name}</h3>

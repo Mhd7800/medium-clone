@@ -1,8 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { AuthModal } from './Modal/AuthModal';
+import { Link } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 import './homecss/index.css'
 
 export default function 
 () {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+    const handleCancel = ()=>{
+        setIsOpen(false)
+    }
+    const handleOk = () =>{
+        setIsOpen(false)
+    }
+    const showModal =()=>{
+        setIsOpen(true)
+    }
+
+
   return (
     <div className='home-main'>
         <div className='home-main-container'>
@@ -13,7 +30,7 @@ export default function
             <h6>
             Discover stories, thinking, and expertise from writers on any topic.
             </h6>
-            <button>
+            <button onClick={showModal}>
                 Start Reading
             </button>
         </div>
@@ -23,6 +40,11 @@ export default function
         </div>
         <div>
         </div>
+        <AuthModal
+                isOpen={isOpen}
+                handleCancel={handleCancel}
+                handleOk={handleOk}
+            />   
     </div>
   )
 }

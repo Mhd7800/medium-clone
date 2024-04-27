@@ -6,20 +6,25 @@ import { selectUser } from '../../features/userSlice'
 import { selectUserId } from '../../features/userIdSlice'
 import getUserInfoById from '../getUserInfo'
 import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'
+import { selectUser_id } from '../../features/authSlice'
 
 
 const ListItem = () => {
     const user = useSelector(selectUser);
-    const userId = useSelector(selectUserId);
+    const userId = useSelector(selectUserId) || useSelector(selectUser_id);;
     const [userData, setUserData]= useState();
     const [loading, setLoading] = useState(false);
+    const [userList, setUserList] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
       const fetchData = async () => {
           try {
               setLoading(true);
               const user = await getUserInfoById(userId);
-              console.log('User Data:', user);
               setUserData(user);
           } catch (error) {
               // Handle the error if needed
@@ -30,7 +35,32 @@ const ListItem = () => {
   
       fetchData();
   }, [userId]);
-    
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make an asynchronous API call using axios
+        const response = await axios.get(`http://localhost:8080/api/v1/getUserList/${userId}`);
+        
+        // Update state with the data received from the API response
+        setUserList(response.data);
+  
+        // Log the first item of the user list to the console
+        console.log('user list:', response.data);
+      } catch (error) {
+        // Handle errors
+        console.error('Error fetching user list:', error);
+      }
+    };
+  
+    // Call the fetchData function when the component mounts or userId changes
+    fetchData();
+  }, [userId]);
+  
+  
+
+
 
 
   return (
@@ -49,17 +79,23 @@ const ListItem = () => {
                 ></Avatar>
                 <span>{userData?.name}</span>
                 </div>
-                <h3>Reading List 🔒</h3>
+                <h3 style={{cursor:'pointer'}}  onClick={()=>navigate(`me/readinglist`)}>Reading List 🔒</h3>
                 <div className='profileleftItemBottom'>
-                <span>3 stories</span>
+                <span>{userList.length} stories</span>
                 <span >...</span>
                 </div>
                 </div>
 
                 <div className='profileRightItem'>
-                    <img src='https://plus.unsplash.com/premium_photo-1682129568869-c261386bc66c?auto=format&fit=crop&q=80&w=1932&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'></img>
-                    <img src='https://plus.unsplash.com/premium_photo-1675827055694-010aef2cf08f?auto=format&fit=crop&q=80&w=1912&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'></img>
-                    <img src='https://media.istockphoto.com/id/147461270/tr/foto%C4%9Fraf/hot-sports-car.jpg?s=2048x2048&w=is&k=20&c=wrBw_dfdoJ3ZJBmNQstOsn__oZCJYTH3RYiYodB6KWE='></img>
+
+                    {userList.slice(0,3).map((userListItem, index)=>(
+                        <div key={index} >
+                            <Link to={`/display/${userListItem.id}`}>
+                            <img src='https://miro.medium.com/v2/resize:fit:1400/format:webp/1*jfdwtvU6V6g99q3G7gq7dQ.png'></img>
+                            </Link>
+                        </div>
+                    ))}
+
                 </div>
             </div>
   )

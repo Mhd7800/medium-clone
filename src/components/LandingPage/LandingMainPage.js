@@ -1,5 +1,6 @@
 import { Skeleton } from 'antd';
 import React, { useState, useEffect } from 'react'
+import { selectUser_id } from '../../features/authSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import LandingRecommendedPost  from "./LandingRecommendedPost "
 import WhoToFollow from "./WhoToFollow"
@@ -9,7 +10,6 @@ import { selectUser } from '../../features/userSlice';
 import { selectUserId } from '../../features/userIdSlice';
 import getUserInfoById from '../getUserInfo';
 import axios from 'axios';
-import Test from './Test';
 import { Tabs } from 'antd';
 const { TabPane } = Tabs;
 
@@ -25,12 +25,15 @@ const LandingMainPage = () => {
     const [topicPosts, setTopicPosts] = useState([]); //testing
     const user = useSelector(selectUser);
     const userId = useSelector(selectUserId);
+    const user_id = useSelector(selectUser_id);
+    
     const [stories,setStories] = useState([]);
     const [users, setUsers] = useState([]);
     const [tab, setTab] = useState(0);
+    const [open, setOpen] = useState(false);
     //console.log(userDetails);
-    const [stories,setStories] = useState();
-    const [users, setUsers] = useState();
+    /*const [stories,setStories] = useState();
+    const [users, setUsers] = useState();*/
 
     const [loading, setLoading] = useState(true);
     const [userLoading, setUserLoading] = useState(true);
@@ -42,14 +45,18 @@ const LandingMainPage = () => {
       };*/
       
     
-    
+  
     useEffect(()=>{
-        getUserInfoById(userId)
+        getUserInfoById(userId || user_id)
       .then((user)=>{
         setUserDetails(user);
       })
-      
-      },[userId])
+      },[userId || user_id])
+
+      useEffect(()=>{
+        console.log('userId :' + userId)
+        console.log('user_id :' + user_id)
+      })
 
       useEffect(() => {
         const getStories = async () => {
@@ -121,6 +128,9 @@ const LandingMainPage = () => {
           });
       };
       
+      const handleOpenChange = (newOpen) => {
+        setOpen(newOpen);
+      };
 
 
   
@@ -193,7 +203,6 @@ const LandingMainPage = () => {
                             <span key={index}>{topic}</span>
                           ))}
                        
-                           
                         </div>
                     </div>
                   <div className='follow'>

@@ -4,7 +4,8 @@ import LandingPage from "./components/LandingPage/index";
 import {BrowserRouter as Router,
   createBrowserRouter,
   createRoutesFromElements,
-  Routes, Route, Navigate, RouterProvider} from "react-router-dom";
+  Routes, Route, Navigate, RouterProvider,
+  json} from "react-router-dom";
 import HomePage from './components/HomePage'
 import { useDispatch, useSelector } from 'react-redux';
 import { auth } from './firebase';
@@ -32,30 +33,45 @@ import { userId } from './features/userIdSlice';
 import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 import ViewStory from './components/ViewStory/ViewStory';
 import DisplayStory, {DisplayStoryLoader} from './components/ViewStory/DisplayStory';
+import ReadingList from './components/Profile/ReadingList';
 
 
 function App() {
 
   const user = useSelector(selectCurrentUser)
   const token = useSelector(selectCurrentToken)
+
+  //const loggedIn = localStorage.getItem("isLoggedIn");
   
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useState()
   const [isAuth, setIsAuth]= useState(false);
   
   
-  const storedToken = localStorage.getItem('auth_Token');
-  if (storedToken) {
-  // Dispatch the setCredentials action with the stored token
-    store.dispatch(setCredentials({ user: null, accessToken: storedToken }));
-  }
+  /*useEffect(() => {
+    const storedToken = localStorage.getItem('auth_Token');
+    if (storedToken) {
+      // Dispatch the setCredentials action with the stored token
+      store.dispatch(setCredentials({ user: null, accessToken: storedToken }));
+    }
+  }, []);*/
+  const persistedAuthUser = localStorage.getItem('authUser');
+  useEffect(()=>{
+    if (persistedAuthUser){
+      const authUser = JSON.parse(persistedAuthUser);
+      dispatch(login(authUser));
+    }
+  },[])
 
+  
+  
   
 
 
   useEffect(() => {
     auth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
+        
         const response = await axios.post('http://localhost:8080/api/v1/auth/check-user', {
           email: authUser.email,
         }, {
@@ -82,10 +98,12 @@ function App() {
         }
   
         localStorage.setItem("isAuth", true);
+        
         dispatch(
           login({
             providerData: authUser.providerData[0],
           }));
+          localStorage.setItem('authUser', JSON.stringify(authUser.providerData[0]))
           //console.log(authUser.providerData[0].photoURL)
           //console.log(authUser.uid) //string
           
@@ -121,6 +139,7 @@ function App() {
   }, [dispatch]);
   
 
+  // if loggedIn= true display this else display something else.
 
   return (
     
@@ -132,13 +151,15 @@ function App() {
 
         <Route path="/" 
         element={<PrivateRoute>
-          <LandingPage userDetails = {userDetails}/>
+          <LandingPage/>
           </PrivateRoute>}
         />
-      <Route path="/story/@:encodedUserName/:encodedTitle" element={<ViewStory />} />
+
+
+      <Route path="/updateStory/:postId" element={<ViewStory />} />
       
       
-      <Route path='/display/:encodedUserName/:encodedTitle' 
+      <Route path='/display/:postId' 
       element={<DisplayStory/>}
       />
       
@@ -154,6 +175,16 @@ function App() {
             element={
               <PrivateRoute>
                 <Lists/>
+              </PrivateRoute>
+            }
+          />
+
+
+          <Route
+            path="profile/me/readinglist"
+            element={
+              <PrivateRoute>
+                <ReadingList/>
               </PrivateRoute>
             }
           />

@@ -90,7 +90,7 @@ const StoryConfirmation = ({ postDto, onCancel }) => {
           console.log('saved sucessfully');
           const encodedTitle = encodeURIComponent(res.data.title);
           //navigate(`/story/@${encodedUserName}/${encodedTitle}`)
-          navigate(`/display/${encodedUserName}/${encodedTitle}`)
+          navigate(`/display/${res.data.id}`)
           };
          //console.log(res.data); 
           

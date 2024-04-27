@@ -1,8 +1,34 @@
+
+.guestClass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  cursor: pointer;
+}
+
+.guestOption {
+  display: flex;
+  align-items: center; 
+  margin: 10 10px; 
+}
+
+.guestOption img {
+  margin: 0 12px;
+}
+
+.guestOption:hover{
+  color: #aaa;
+}
+
 .singleBlog {
   display: flex;
   flex-direction: column;
   background-color: white;
+  justify-content: center;
+  width: 100%;
   /* width: fit-content; */
+  margin: 0;
+  padding: 0;
 }
 
 .singleBlog__title p,
@@ -22,7 +48,7 @@
 .singleBlog__title {
   margin: 0 auto;
   font-weight: 700 !important;
-  text-align: center;
+  /*text-align: center;*/
   padding-top: 20px;
   margin-bottom: 10px;
   color: var(--main-color);
@@ -33,17 +59,51 @@
 
 .singleBlog_author{
   display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   justify-content: center;
   margin-bottom: 20px
 }
 
-.singleBlog_left{
+
+
+
+.singleBlogHeader{
+display: flex;
+flex-direction: row;
+margin: 20px 0;
+border-bottom: 1px solid rgb(242, 242, 242);
+border-top: 1px solid rgb(242, 242, 242);
+height: 50px;
+align-items: center;
+width: inherit;
+justify-content: space-between;
+}
+
+.singleBlogHeaderLeft span {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.singleBlogHeaderLeft{
+  display: flex;
+  align-items: flex-start;
+  justify-content:flex-start;
+  margin-left: 90px;
+}
+
+.singleBlogHeaderRight{
+  margin: 0 50px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
   width: 50%;
 }
+
+
 
 .author-details{
   display: flex;
@@ -169,5 +229,27 @@
 
   .singleBlog__title {
     font-size: 46px;
+  }
+}
+
+
+/* Add this to your CSS file */
+.clap-button {
+  transition: transform 0.3s ease;
+}
+
+.clap-button.clicked {
+  animation: clap-animation 0.5s ease;
+}
+
+@keyframes clap-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }

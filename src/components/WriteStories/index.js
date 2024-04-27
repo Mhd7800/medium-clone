@@ -12,6 +12,7 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import StoryConfirmation from './StoryConfirmation';
+import { selectUser_id } from '../../features/authSlice';
 
 
 const style = {
@@ -30,7 +31,7 @@ const style = {
 
 
 const Index = () => {
-  const userId = useSelector(selectUserId);
+  const userId = useSelector(selectUserId) || useSelector(selectUser_id);
   const [open, setOpen] = React.useState(false);
   const [close, setClose] = React.useState(false);
   const [read_time, setReadTime] = useState('');

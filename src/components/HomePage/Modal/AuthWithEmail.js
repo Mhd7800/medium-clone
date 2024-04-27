@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentToken } from "../../../features/authSlice";
 import { setUserId } from '../../../features/authSlice';
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 
 export default function AuthWithEmail() {
     const token = useSelector(selectCurrentToken);
@@ -35,7 +36,8 @@ export default function AuthWithEmail() {
         try {
             const response = await axios.get(`http://localhost:8080/api/v1/auth/get-user?username=${usernameOrEmail}`);
             const user = response.data;
-            
+            return user;
+
         } catch (error) {
             // Handle the error
             console.error('Error fetching user:', error);
@@ -49,7 +51,9 @@ export default function AuthWithEmail() {
             const userData = await login({ usernameOrEmail, password }).unwrap();
             dispatch(setCredentials({ ...userData, usernameOrEmail }));
 
-            await fetchAndSaveUserId();
+            //await fetchAndSaveUserId();
+            const user = await fetchAndSaveUserId(); 
+            dispatch(setUserId(user.id)); 
 
             localStorage.setItem("isAuth", true);
             setUsernameOrEmail("");

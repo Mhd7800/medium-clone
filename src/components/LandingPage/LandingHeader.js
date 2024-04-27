@@ -1,6 +1,5 @@
 import { Avatar, Image, Popover } from 'antd'
 import React, { useEffect, useState } from 'react'
-import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { login,logout, selectUser } from '../../features/userSlice';
@@ -10,39 +9,28 @@ import { selectCurrentToken } from '../../features/authSlice';
 import { logOut } from '../../features/authSlice';
 import { selectUserId } from '../../features/userIdSlice';
 import getUserInfoById from "../getUserInfo"
-
-import getUserInfoById from '../getUserInfo';
+import { selectUser_id } from '../../features/authSlice';
 
 
 
 const LandingHeader = ({onSave}) => {
 
-    const userId = useSelector(selectUserId);
     const [visible, setvisible] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const token = useSelector(selectCurrentToken)
-    const userId = useSelector(selectUserId);
     const [userInfo, setUserInfo] = useState();
-
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const user = await getUserInfoById(userId);
-            setUserInfo(user);
-          } catch (error) {
-            console.error('Error fetching user by ID:', error);
-            // Handle it later
-          }
-        };
-    
-        fetchData(); // Call the async function inside useEffect
-      }, [userId]);
-
+    //const userId = useCustomId();
+    //const userId = useSelector(selectUserId) ? user : useSelector(selectUser_id);
+    const userId = useSelector(selectUserId); // user logged in with google
+    const user_id = useSelector(selectUser_id); // user logged in with jwt
     const [userData, setUserData]= useState();
     const [loading, setLoading] = useState(false);    
 
+    useEffect(()=>{
+        console.log('the user id: '+ userId)
+    },[])
     
     useEffect(() => {
         const fetchData = async () => {
@@ -57,6 +45,7 @@ const LandingHeader = ({onSave}) => {
             } finally {
                 setLoading(false);
             }
+           
         };
     
         fetchData();
@@ -64,6 +53,9 @@ const LandingHeader = ({onSave}) => {
     }, [userId]);
     
       
+    useEffect(()=>{
+        console.log("the access token : "+ token)
+    },[])
 
 
       /*useEffect(()=>{
@@ -71,11 +63,10 @@ const LandingHeader = ({onSave}) => {
         setUserData(temp);
       },[])*/
 
-      console.log('photo url link :'+ userData?.photoURL)
+      /*console.log('photo url link :'+ userData?.photoURL)
       console.log('the id: '+ userId)
-      console.log('the object itself: '+ userData)
+      console.log('the object itself: '+ userData)*/
       
-
 
     const Content = () =>{
         return (
@@ -131,11 +122,12 @@ const LandingHeader = ({onSave}) => {
                                     replace:true,
                                 })*/ //kendisi bilir nereye gidecegine
                             })
+                            localStorage.setItem("isLoggedIn",false)
                         }
                         else{
                             dispatch(logOut());
                         }
-                        localStorage.setItem("isAuth",false);                        
+                                             
                         //delete axios.defaults.headers.common['Authorization'];
                     }}
                     >
@@ -198,8 +190,7 @@ const LandingHeader = ({onSave}) => {
                                     src={
                                         <Image
                                           preview={false}
-                                          src={userInfo?.photoURL ?? 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg?w=826'}
-                                          src={userData?.photoURL ?? 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}
+                                          src={userData?.photourl ?? 'https://img.icons8.com/material-outlined/24/user--v1.png'}
                                         />
                                       }
                                 />

@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import { selectUserId } from '../../features/userIdSlice';
+import Alert from '@mui/material/Alert';
 
 
 export default function LandingRecommendedPost ({ story }) {
@@ -26,6 +27,7 @@ export default function LandingRecommendedPost ({ story }) {
   const [userInfo, setUserInfo] = useState();
   const userId = story?.user_id;
   const [open, setOpen] = useState(false);
+  const [successMessageVisible, setSuccessMessageVisible] = useState(false);
 
 
   const notify = () => toast("Story saved sucessfully!");
@@ -45,8 +47,11 @@ export default function LandingRecommendedPost ({ story }) {
   const addToList = async() => {
     try {
       // Send a POST request to your backend endpoint to save the post
-      await axios.post(`http://localhost:8080/api/v1/user/${Id}/addPostToList/${story.id}`);
-      notify()
+      await axios.post(`http://localhost:8080/api/v1/${Id}/addPostToList/${story.id}`);
+      setSuccessMessageVisible(true); 
+        setTimeout(() => {
+          setSuccessMessageVisible(false); // Hide the success message after 1 second
+        }, 1000);
       console.log('Post saved successfully');
     } catch (error) {
       // Handle any errors that occur during the request
@@ -83,8 +88,8 @@ export default function LandingRecommendedPost ({ story }) {
             )}
         </div>
         <div className="landing-content">
-          <Link to = {`/display/${userInfo?.name}/${reactHtmlParser(story?.title)}`}>{reactHtmlParser(story?.title)}</Link>
-          { story?.title } 
+          <Link to = {`/display/${story.id}`}>{reactHtmlParser(story?.title)}</Link>
+        
           <div style={contentStyle}>
             {reactHtmlParser(story?.content)}
           </div>
@@ -120,8 +125,7 @@ export default function LandingRecommendedPost ({ story }) {
             open={open}
             onOpenChange={handleOpenChange}
             >
-            
-              <Button>
+              <Button type='text'>
               <svg class="eh el py" width="25" height="25">
                 <path
                   d="M5 12.5c0 .55.2 1.02.59 1.41.39.4.86.59 1.41.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41A1.93 1.93 0 0 0 7 10.5c-.55 0-1.02.2-1.41.59-.4.39-.59.86-.59 1.41zm5.62 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.55 0 1.02-.2 1.41-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.59-1.41a1.93 1.93 0 0 0-1.41-.59c-.55 0-1.03.2-1.42.59-.39.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.58 1.41.4.4.87.59 1.43.59.56 0 1.03-.2 1.42-.59.39-.39.58-.86.58-1.41 0-.55-.2-1.02-.58-1.41a1.93 1.93 0 0 0-1.42-.59c-.56 0-1.04.2-1.43.59-.39.39-.58.86-.58 1.41z"
@@ -131,7 +135,9 @@ export default function LandingRecommendedPost ({ story }) {
               </Button>
             
             </Popover>
-            
+            {successMessageVisible && (
+      <Alert severity="success">Successfully saved to user List.</Alert>
+    )}
           </div>
         </div>
       </div>
