@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux';
 import { selectUserId } from '../../features/userIdSlice';
 import axios from 'axios';
 import getUserInfoById from '../getUserInfo';
+import { selectUser_id } from '../../features/authSlice';
+import { Link } from 'react-router-dom';
+
 
 
 const About = () => {
@@ -12,13 +15,16 @@ const About = () => {
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState(null);
   const userId = useSelector(selectUserId);
+  const user_id = useSelector(selectUser_id); // user logged in with jwt
   const [loading, setLoading] = useState(true);
+  const [followings, setFollowings] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const user = await getUserInfoById(userId)
+        const user = await getUserInfoById(userId || user_id)
         setUserInfo(user);
       } catch (error) {
         setError(error.message || 'An error occurred');
@@ -30,6 +36,21 @@ const About = () => {
     fetchData();
   }, [userId]);
 
+
+  const fetchFollowings = async () =>{
+    try {
+      const response = await axios.get(`http://localhost:8080/api/v1/following?userName=${userInfo.username}`);
+      setFollowings(response.data);
+      console.log('followings: ', response.data);
+    }
+    catch(error){
+      console.log("Error fetching followers :", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchFollowings();
+}, [userInfo.username]);
 
 
   const handleEdit = () => {
@@ -54,7 +75,7 @@ const About = () => {
         setError('Please provide valid information.');
         return;
       }
-      await axios.put(`http://localhost:8080/api/v1/user/update/${userId}`, { about: userInfo.about }, config);
+      await axios.put(`http://localhost:8080/api/v1/user/update/${userId || user_id}`, { about: userInfo.about }, config);
       setEditing(false); // Exit editing mode
     } catch (error) {
       console.error('Error:', error);
@@ -70,7 +91,7 @@ const About = () => {
   const handleClearAbout = async () => {
     try {
       // Update about information in the db by sending an empty string
-      await axios.put(`http://localhost:8080/api/v1/user/update/${userId}`, { about: '' }, config);
+      await axios.put(`http://localhost:8080/api/v1/user/update/${userId || user_id}`, { about: '' }, config);
       setUserInfo({ ...userInfo, about: '' }); // Clear the about property
     } catch (error) {
       console.error('Error:', error);
@@ -82,13 +103,31 @@ const About = () => {
   return (
     <div>
       {!editing && userInfo && userInfo.about && (
+        <>
+        
         <div className='DisplayAbout'>
           {loading && <div className="loading-indicator">Loading...</div>}
           <p>{userInfo.about}</p>
           <button onClick={handleEdit}>Edit</button>
           <button onClick={handleClearAbout}>Clear</button>
         </div>
+        <div className="aboutFollowing" style={{margin:'20px 0'}}>
+       
+        {followings.length > 1 ? (
+         <span style={{ color: 'green'}}>{followings.length} 
+         <Link to={'followings'}> Followings</Link>
+         </span>
+        ):(
+         <span style={{ color: 'green'}}>{followings.length} Following</span>
+        )}
+        
+         
+       </div>
+       </>
+        
       )}
+
+      
 
       {!editing && (!userInfo.about) && (
         <div className="profileAbout">
@@ -108,7 +147,14 @@ const About = () => {
         <hr></hr>
       </div>
       <div className="aboutFollowing">
-        <span style={{ color: 'green' }}>1 Following</span>
+       
+       {followings.length > 1 ? (
+        <span style={{ color: 'green' }}>{followings.length} Followings</span>
+       ):(
+        <span style={{ color: 'green' }}>{followings.length} Following</span>
+       )}
+       
+        
       </div>
       </div>
         </div>

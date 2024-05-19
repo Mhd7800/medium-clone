@@ -15,7 +15,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import { selectUserId } from '../../features/userIdSlice';
+import { selectUser_id } from '../../features/authSlice';
 import Alert from '@mui/material/Alert';
+import { message } from 'antd';
+
 
 
 export default function LandingRecommendedPost ({ story }) {
@@ -23,14 +26,15 @@ export default function LandingRecommendedPost ({ story }) {
 
   const user = useSelector(selectUser);
   const Id = useSelector(selectUserId);
+  const user_id = useSelector(selectUser_id);
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState();
   const userId = story?.user_id;
   const [open, setOpen] = useState(false);
-  const [successMessageVisible, setSuccessMessageVisible] = useState(false);
+  const [followings, setFollowings] = useState([]);
+  const [authorInfo, setAuthorInfo] = useState();
 
-
-  const notify = () => toast("Story saved sucessfully!");
+  
 
   useEffect(()=>{
     getUserInfoById(userId)
@@ -40,24 +44,80 @@ export default function LandingRecommendedPost ({ story }) {
   
   },[userId])
 
+  useEffect(()=>{
+    getUserInfoById(Id || user_id)
+  .then((user)=>{
+    setAuthorInfo(user);
+  })
+  },[Id || user_id])
+
+
+  const isFollowing = (author_id) => {
+    return followings.some((following) => following.id === author_id);
+};
+  
+  useEffect(()=>{
+    fetchFollowings();
+  },[])
+
   const handleOpenChange = (newOpen) => {
     setOpen(newOpen);
   };
 
+
+  const fetchFollowings = async () => {
+    try {
+      if (userInfo) {
+        const response = await axios.get(`http://localhost:8080/api/v1/following?userName=${authorInfo.username}`);
+        setFollowings(response.data);
+        console.log('followings: ', response.data);
+      }
+    } catch(error) {
+      console.log("Error fetching followers :", error);
+    }
+  }
+  
+
   const addToList = async() => {
     try {
-      // Send a POST request to your backend endpoint to save the post
-      await axios.post(`http://localhost:8080/api/v1/${Id}/addPostToList/${story.id}`);
-      setSuccessMessageVisible(true); 
-        setTimeout(() => {
-          setSuccessMessageVisible(false); // Hide the success message after 1 second
-        }, 1000);
+      
+      await axios.post(`http://localhost:8080/api/v1/${Id || user_id}/addPostToList/${story.id}`);
+      message.info("Post saved successfully")
       console.log('Post saved successfully');
     } catch (error) {
-      // Handle any errors that occur during the request
+      message.error('Failed to follow user')
       console.error('Error saving post:', error);
     }
   }
+
+  const handleFollow = async (follower) => {
+    try {
+        const response = await axios.post(`http://localhost:8080/api/v1/follow?followerId=${Id || user_id}&followingId=${follower}`)
+
+        if (response.status === 200) {
+            message.info('Followed successfully');
+            fetchFollowings();
+            //fetchFollowingPosts();
+        }
+    } catch (error) {
+        console.log('Error following user:', error);
+        message.error('Failed to follow user');
+    }
+}; 
+
+const handleUnfollow = async (follower) => {
+  try {
+      const response = await axios.post(`http://localhost:8080/api/v1/unfollow?followerId=${Id || user_id}&followingId=${follower}`);
+      if (response.status === 200) {
+          message.warning('Unfollowed successfully');
+          fetchFollowings();
+          //fetchFollowingPosts();
+      }
+  } catch (error) {
+      console.log('Error unfollowing user:', error);
+      message.error('Failed to unfollow user');
+  }
+};
 
   const styles = {
     color: '#999',
@@ -81,7 +141,7 @@ export default function LandingRecommendedPost ({ story }) {
         <div className="landing-top">
         {userInfo && (
               <>
-                <img src={userInfo.photoURL} alt="logo" />
+                <img src={userInfo.photoURL} alt="logo"/>
                 <span>{userInfo.name} {`  `}</span> 
                 <span style={styles}>  ·  {story?.created_date}</span>
               </>
@@ -119,7 +179,14 @@ export default function LandingRecommendedPost ({ story }) {
               
             </Tooltip>
             <Popover 
-            content={<a>Follow Author</a>}
+            content={
+              isFollowing(story.user_id) ? (
+                <span style={{ cursor: 'pointer' }} onClick={() => handleUnfollow(story.user_id)}>Unfollow author</span>
+              ) : (
+                <span style={{ cursor: 'pointer' }} onClick={() => handleFollow(story.user_id)}>Follow author</span>
+              )
+            }
+
             placement="bottom"
             trigger="click"
             open={open}
@@ -135,9 +202,7 @@ export default function LandingRecommendedPost ({ story }) {
               </Button>
             
             </Popover>
-            {successMessageVisible && (
-      <Alert severity="success">Successfully saved to user List.</Alert>
-    )}
+           
           </div>
         </div>
       </div>

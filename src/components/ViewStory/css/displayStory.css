@@ -31,6 +31,33 @@
   padding: 0;
 }
 
+/*.popover {
+  position: right;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}*/
+.popover {
+  position: fixed; /* Fixed positioning to keep it visible */
+  top: 0; /* Align to the top */
+  right: 0; /* Align to the right side */
+  height: 100vh; /* Full height of the viewport */
+  width: 25%;
+  width: fit-content;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 999; /* Ensure it's above other content */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+}
+
+
+
 .singleBlog__title p,
 .singleBlog__title h1,
 .singleBlog__title h2,

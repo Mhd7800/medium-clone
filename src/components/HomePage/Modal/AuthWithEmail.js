@@ -37,7 +37,6 @@ export default function AuthWithEmail() {
             const response = await axios.get(`http://localhost:8080/api/v1/auth/get-user?username=${usernameOrEmail}`);
             const user = response.data;
             return user;
-
         } catch (error) {
             // Handle the error
             console.error('Error fetching user:', error);
@@ -55,7 +54,6 @@ export default function AuthWithEmail() {
             const user = await fetchAndSaveUserId(); 
             dispatch(setUserId(user.id)); 
 
-            localStorage.setItem("isAuth", true);
             setUsernameOrEmail("");
             setPassword("");
             navigate("/");

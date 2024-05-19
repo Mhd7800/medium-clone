@@ -13,7 +13,8 @@ import { selectUser_id } from '../../features/authSlice'
 
 const ListItem = () => {
     const user = useSelector(selectUser);
-    const userId = useSelector(selectUserId) || useSelector(selectUser_id);;
+    const userId = useSelector(selectUserId);
+    const user_id = useSelector(selectUser_id);
     const [userData, setUserData]= useState();
     const [loading, setLoading] = useState(false);
     const [userList, setUserList] = useState([]);
@@ -24,7 +25,7 @@ const ListItem = () => {
       const fetchData = async () => {
           try {
               setLoading(true);
-              const user = await getUserInfoById(userId);
+              const user = await getUserInfoById(userId || user_id);
               setUserData(user);
           } catch (error) {
               // Handle the error if needed
@@ -34,14 +35,14 @@ const ListItem = () => {
       };
   
       fetchData();
-  }, [userId]);
+  }, [userId || user_id]);
   
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Make an asynchronous API call using axios
-        const response = await axios.get(`http://localhost:8080/api/v1/getUserList/${userId}`);
+        const response = await axios.get(`http://localhost:8080/api/v1/getUserList/${userId || user_id}`);
         
         // Update state with the data received from the API response
         setUserList(response.data);
@@ -56,7 +57,7 @@ const ListItem = () => {
   
     // Call the fetchData function when the component mounts or userId changes
     fetchData();
-  }, [userId]);
+  }, [userId || user_id]);
   
   
 

@@ -34,6 +34,8 @@ import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 import ViewStory from './components/ViewStory/ViewStory';
 import DisplayStory, {DisplayStoryLoader} from './components/ViewStory/DisplayStory';
 import ReadingList from './components/Profile/ReadingList';
+import Followers from './components/Profile/Followers';
+import Followings from './components/Profile/Followings'
 
 
 function App() {
@@ -41,12 +43,14 @@ function App() {
   const user = useSelector(selectCurrentUser)
   const token = useSelector(selectCurrentToken)
 
-  //const loggedIn = localStorage.getItem("isLoggedIn");
   
   const dispatch = useDispatch();
   const [userDetails, setUserDetails] = useState()
-  const [isAuth, setIsAuth]= useState(false);
   
+  useEffect(()=>{
+    console.log('user :', user)
+    console.log('token :', token)
+  })
   
   /*useEffect(() => {
     const storedToken = localStorage.getItem('auth_Token');
@@ -55,16 +59,15 @@ function App() {
       store.dispatch(setCredentials({ user: null, accessToken: storedToken }));
     }
   }, []);*/
-  const persistedAuthUser = localStorage.getItem('authUser');
+
+  /*const persistedAuthUser = localStorage.getItem('authUser');
   useEffect(()=>{
     if (persistedAuthUser){
       const authUser = JSON.parse(persistedAuthUser);
       dispatch(login(authUser));
     }
-  },[])
+  },[])*/
 
-  
-  
   
 
 
@@ -86,6 +89,7 @@ function App() {
             name: authUser?.displayName,
             //id: authUser.providerData[0].uui,  //the id provided by firestore is a string        
             photourl: authUser.providerData[0].photoURL,
+            username: authUser.displayName.trim().toLocaleLowerCase(),
             
           }, {
             headers: {
@@ -97,7 +101,7 @@ function App() {
           // User already exists, do nothing
         }
   
-        localStorage.setItem("isAuth", true);
+       
         
         dispatch(
           login({
@@ -109,7 +113,8 @@ function App() {
           
           //******get the user id ****/
           try {
-            const response = await axios.get(`http://localhost:8080/api/v1/auth/get-user?email=${authUser.email}`, {
+            //const response = await axios.get(`http://localhost:8080/api/v1/auth/get-user?email=${authUser.email}`, {
+            const response = await axios.get(`http://localhost:8080/api/v1/user/email/${authUser.email}`, {
               headers: {
                 'Content-Type': 'application/json',
               },
@@ -119,7 +124,7 @@ function App() {
               // User found, update userDetails state
               //console.log('access token '+authUser.accessToken)
               //console.log('refresh token '+authUser.refreshToken)
-              console.log(response.data.id);
+              console.log('google auth userId: '+response.data.id);
               dispatch(userId(response.data.id))
             } else if (response.status === 404) {
               // User not found, handle accordingly
@@ -167,6 +172,18 @@ function App() {
       <Route path="/profile" 
         element={<PrivateRoute>
           <Profile/>
+          </PrivateRoute>}
+        />
+
+    <Route path="profile/followers" 
+        element={<PrivateRoute>
+          <Followers/>
+          </PrivateRoute>}
+        />
+    
+    <Route path="profile/followings" 
+        element={<PrivateRoute>
+          <Followings/>
           </PrivateRoute>}
         />
 

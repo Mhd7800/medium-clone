@@ -11,9 +11,11 @@ import { selectUserId } from '../../features/userIdSlice';
 import getUserInfoById from '../getUserInfo';
 import axios from 'axios';
 import { Tabs } from 'antd';
+import { message } from 'antd';
+import { set } from 'firebase/database';
+
+
 const { TabPane } = Tabs;
-
-
 
 
 const LandingMainPage = () => {
@@ -31,20 +33,36 @@ const LandingMainPage = () => {
     const [users, setUsers] = useState([]);
     const [tab, setTab] = useState(0);
     const [open, setOpen] = useState(false);
-    //console.log(userDetails);
-    /*const [stories,setStories] = useState();
-    const [users, setUsers] = useState();*/
-
+    const [canfollowUsers, setCanFollowUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userLoading, setUserLoading] = useState(true);
     const [userDetails, setUserDetails] = useState();
     const topicIndex = 0;
+    const [followingPosts, setfollowingPosts] = useState([]);
+    const [followingPostsLoading, setFollowingPostsLoading] = useState(true);
+    
 
     /*const onChange = (key: string) => {
         console.log(key);
       };*/
+
+        const fetchFollowingPosts = async () => {
+          try {
+            const response = await fetch(`http://localhost:8080/api/v1/posts/getPostByFollowings/${userDetails.username}`);
+            const data = await response.json();
+            setfollowingPosts(data);
+            console.log('following posts:', followingPosts);
+            setFollowingPostsLoading(false);
+          } catch (error) {
+            console.log('error fetching following posts:', error);
+            setFollowingPostsLoading(false);
+          }
+        };
       
-    
+      useEffect(() => {
+        fetchFollowingPosts();
+      }, [userDetails]);
+      
   
     useEffect(()=>{
         getUserInfoById(userId || user_id)
@@ -53,10 +71,14 @@ const LandingMainPage = () => {
       })
       },[userId || user_id])
 
+
       useEffect(()=>{
         console.log('userId :' + userId)
         console.log('user_id :' + user_id)
-      })
+        fetchCanFollow();
+        //console.log('userDetails:' + userDetails.username)
+      },[userDetails])
+
 
       useEffect(() => {
         const getStories = async () => {
@@ -77,23 +99,6 @@ const LandingMainPage = () => {
         getStories();
       }, []);
 
-    useEffect(() => {
-        async function getUsers() {
-            try {
-                const response = await fetch("http://localhost:8080/api/v1/user/allUsers");
-                const fetchedUsers = await response.json();
-
-                let _users = fetchedUsers?.filter((data) => data?.id !== userDetails?.id)
-                setUsers(_users);
-                setUserLoading(false);
-
-            } catch (err) {
-                console.log(err.response.data.message);
-              setUserLoading(false);
-            }
-        }
-        getUsers();
-      }, [userDetails]);
     
       const topics = [
         'Fashion', 'Beauty', 'Travel', 'Lifestyle', 'Personal', 'Tech', 'Health',
@@ -104,127 +109,151 @@ const LandingMainPage = () => {
       ];
 
       useEffect(() => {
-        // Fetch popular topics from the server
         axios.get('http://localhost:8080/api/v1/posts/popular-topics')
           .then(response => {
-            setPopularTopics(response.data.slice(0, 5)); // Assuming the API returns an array of popular topics
+            setPopularTopics(response.data.slice(0, 5)); 
           })
           .catch(error => {
             console.error('Error fetching popular topics:', error);
           });
       }, []);
+      
     
-      const handleTabChange = topic => {
-        // Fetch posts for the selected topic
-        axios.get(`http://localhost:8080/api/v1/posts/topics/${topic}`)
-          .then(response => {
-            console.log(`Fetched posts for ${topic}:`, response.data); // Debugging
-            setTopicPosts(response.data); // Assuming the API returns an array of posts for the selected topic
-            setSelectedTopic(topic);
-            console.log('selected topic : '+ topic) 
-          })
-          .catch(error => {
-            console.error(`Error fetching posts for ${topic}:`, error);
-          });
-      };
+      const handleTabChange = (key) =>{
+        if (key === 'following'){
+          setTab(key);
+        }
+        else {
+          axios.get(`http://localhost:8080/api/v1/posts/topics/${key}`)
+            .then(response => {
+              console.log(`Fetched posts for ${key}:`, response.data); // Debugging
+              setTopicPosts(response.data); 
+              setSelectedTopic(key);
+              console.log('selected topic : '+ key);
+            })
+            .catch(error => {
+              console.error(`Error fetching posts for ${key}:`, error);
+            });
+        }
+      }
+      
+      
       
       const handleOpenChange = (newOpen) => {
         setOpen(newOpen);
       };
 
+      
+        const fetchCanFollow = async () => {
+          try {
+            const response = await axios.get(`http://localhost:8080/api/v1/can-follow?userName=${userDetails?.username}`);
+            setCanFollowUsers(response.data);
+          } catch (error) {
+            console.log('Failed because of: ' + error);
+          }
+        };
+       
+
+      const handleFollow = async (authorId) => {
+        try {
+          const response = await axios.post(`http://localhost:8080/api/v1/follow?followerId=${userId || user_id}&followingId=${authorId}`);
+          if (response.status === 200) {
+            message.info('Followed successfully');
+            // Update the follow status immediately
+            setCanFollowUsers(prevUsers => prevUsers.map(user => user._id === authorId ? { ...user, isFollowing: true } : user));
+            fetchCanFollow();
+            //fetchFollowingPosts();
+          }
+        } catch (error) {
+          console.error('Error following user:', error);
+          message.error('Failed to follow user');
+        }
+      };
+    
+      const handleUnfollow = async (authorId) => {
+        try {
+          const response = await axios.post(`http://localhost:8080/api/v1/unfollow?followerId=${userId || user_id}&followingId=${authorId}`);
+          if (response.status === 200) {
+            message.success('Unfollowed successfully');
+            // Update the follow status immediately
+            setCanFollowUsers(prevUsers => prevUsers.map(user => user._id === authorId ? { ...user, isFollowing: false } : user));
+            fetchCanFollow();
+            //fetchFollowingPosts();
+          }
+        } catch (error) {
+          console.error('Error unfollowing user:', error);
+          message.error('Failed to unfollow user');
+        }
+      };
 
   
-    return (
-    <div className='landing-main'>
-        <div className='landing-main-container'>
-            {/*<div className='landing-main-left'>
-            <Tabs
-            defaultActiveKey="1"
-            onChange={onChange}
-            items={[
-            {
-                label: `For you`,
-                key: '1',
-                children: (
-                  <div>
-    {
-                    stories?.length > 0 ? (
-                      stories.map((data) => (
-                        <LandingRecommendedPost
-                          key={data.id} // Use a unique identifier
-                          story={data}
-                        />
-                      ))
-                    ) : (
-                      <p>No stories available.</p>
-                    
-                 )
-                  }   
-             </div>                     
-                ),
-            },
-            {
-                label: `Tab 2`,
-                key: '2',
-                children: `Content of Tab Pane 2`,
-            },
-            {
-                label: `Tab 3`,
-                key: '3',
-                children: `Content of Tab Pane 3`,
-            },
-            ]}
-        />
-          
-          </div>*/}
-          <Tabs defaultActiveKey={popularTopics[0]} onChange={handleTabChange}>
-            {popularTopics.map(topic => (
-              <TabPane tab={topic} key={topic}>
-                {selectedTopic === topic ? (
-                  topicPosts.map(post => (
-                    <LandingRecommendedPost
-                      key={post.id}
-                      story={post}
+      return (
+        <div className='landing-main'>
+          <div className='landing-main-container'>
+            
+            <Tabs defaultActiveKey="following" onChange={handleTabChange}>
+              
+              {followingPostsLoading ? (
+                    <Skeleton active />
+                ) : (
+                    <TabPane tab="Following" key="following">
+                        {followingPosts.map(post => (
+                            <LandingRecommendedPost
+                                key={post.id}
+                                story={post}
+                                fetchFollowingPosts={fetchFollowingPosts}
+                            />
+                        ))}
+                    </TabPane>
+                )}
+
+              {popularTopics.map(topic => (
+                <TabPane tab={topic} key={topic}>
+                  {selectedTopic === topic ? (
+                    topicPosts.map(post => (
+                      <LandingRecommendedPost
+                        key={post.id}
+                        story={post}
+                        //fetchFollowingPosts={fetchFollowingPosts}
+                      />
+                    ))
+                  ) : (
+                    <Skeleton active />
+                  )}
+                </TabPane>
+              ))}
+            </Tabs>
+            <div className='landing-main-right'>
+              <div className='recommended-topics'>
+                <h2>Recommended topics</h2>
+                <div className='topic'>
+                  {popularTopics.map((topic, index) => (
+                    <span key={index}>{topic}</span>
+                  ))}
+                </div>
+              </div>
+              <div className='follow'>
+                <h2>Who to follow</h2>
+                {canfollowUsers.length > 0 ? (
+                  canfollowUsers.slice(0, 5).map((data) => (
+                    <WhoToFollow
+                      key={data?._id}
+                      data={data}
+                      handleFollow={handleFollow}
+                      handleUnfollow={handleUnfollow}
                     />
                   ))
                 ) : (
-                  <Skeleton active />
-                )}
-              </TabPane>
-            ))}
-          </Tabs>
-
-            <div className='landing-main-right'>
-                    <div className='recommended-topics'>
-                        <h2>Recommended topics</h2>
-                        <div className='topic'>
-                          
-                        {popularTopics.map((topic, index) => (
-                            <span key={index}>{topic}</span>
-                          ))}
-                       
-                        </div>
-                    </div>
-                  <div className='follow'>
-                  <h2>Who to follow</h2>
-            {users?.map((data) => (
-              <WhoToFollow key={data?._id} data={data} />
-            ))}
-            {[...Array(5)].map((_, idx) => {
-              return (
-                <>
-                  {userLoading && (
+                  [...Array(5)].map((_, idx) => (
                     <Skeleton key={idx} active avatar paragraph={{ rows: 1 }} />
-                  )}
-                </>
-              );
-            })}
-                  </div>
-                   
-                </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-  )
+      );
+      
 }
 
 

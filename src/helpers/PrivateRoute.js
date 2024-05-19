@@ -9,8 +9,6 @@ function PrivateRoute({ children }) {
   const token = useSelector(selectCurrentToken)
   const location = useLocation();
 
-  //|| localStorage.getItem("isAuth")===true
-
   if (user || token) {
     return children;
   } else {

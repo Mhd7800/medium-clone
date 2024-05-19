@@ -21,8 +21,7 @@ const LandingHeader = ({onSave}) => {
     const user = useSelector(selectUser);
     const token = useSelector(selectCurrentToken)
     const [userInfo, setUserInfo] = useState();
-    //const userId = useCustomId();
-    //const userId = useSelector(selectUserId) ? user : useSelector(selectUser_id);
+
     const userId = useSelector(selectUserId); // user logged in with google
     const user_id = useSelector(selectUser_id); // user logged in with jwt
     const [userData, setUserData]= useState();
@@ -36,7 +35,7 @@ const LandingHeader = ({onSave}) => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const user = await getUserInfoById(userId);
+                const user = await getUserInfoById(userId || user_id);
                 console.log('User Data:', user);
                 setUserData(user);
                 onSave();
@@ -50,7 +49,7 @@ const LandingHeader = ({onSave}) => {
     
         fetchData();
         
-    }, [userId]);
+    }, [userId || user_id]);
     
       
     useEffect(()=>{
@@ -122,9 +121,10 @@ const LandingHeader = ({onSave}) => {
                                     replace:true,
                                 })*/ //kendisi bilir nereye gidecegine
                             })
-                            localStorage.setItem("isLoggedIn",false)
+                            localStorage.setItem("isLoggedIn",false);
+                            localStorage.removeItem('authUser');
                         }
-                        else{
+                        else {
                             dispatch(logOut());
                         }
                                              
@@ -190,7 +190,7 @@ const LandingHeader = ({onSave}) => {
                                     src={
                                         <Image
                                           preview={false}
-                                          src={userData?.photourl ?? 'https://img.icons8.com/material-outlined/24/user--v1.png'}
+                                          src={userData?.photoURL ?? 'https://img.icons8.com/material-outlined/24/user--v1.png'}
                                         />
                                       }
                                 />

@@ -19,6 +19,7 @@ import { selectUserId } from '../../features/userIdSlice'
 import axios from 'axios'
 import Home from './Home'
 import { selectUser_id } from '../../features/authSlice'
+import { Link } from 'react-router-dom'
 
 
 const style = {
@@ -34,6 +35,11 @@ const style = {
   };
 
 
+
+
+const Profile = () => {
+
+  
 const [userInfo, setUserInfo] = useState({});
 const userId = useSelector(selectUserId);
 const user_id = useSelector(selectUser_id);
@@ -41,10 +47,9 @@ const user = useSelector(selectUser);
 const [open, setOpen] = React.useState(false);
 const [close, setClose] = React.useState(false);
 const [posts, setPosts] = useState([]);
-//const user_id = useSelector(selectUser_id);
+const [followers, setFollowers] = useState([]);
 
 
-const Profile = () => {
   const getUserInfoById = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/api/v1/user/${userId || user_id}`);
@@ -56,6 +61,22 @@ const Profile = () => {
   };
 
 
+ 
+ useEffect(()=>{
+  const fetchFollowers = async () =>{
+    try {
+      const response = await axios.get(`http://localhost:8080/api/v1/followers?userName=${userInfo.username}`);
+      setFollowers(response.data);
+      console.log('followers: ', response.data);
+    }
+    catch(error){
+      console.log("Error fetching followers :", error)
+    }
+  }
+  fetchFollowers();
+ },[userInfo.username]) 
+
+
 
 useEffect(() => {
   const fetchPosts = async () => {
@@ -63,6 +84,7 @@ useEffect(() => {
       // Update the URL to match your API endpoint
       const response = await axios.get(`http://localhost:8080/api/v1/posts/getPostByUserId/${userId || user_id}`);
       setPosts(response.data);
+     
     } catch (error) {
       console.error("Error fetching data: ", error);
       // Handle the error according to your application's needs
@@ -152,8 +174,18 @@ const handleSaveProfile = async () => {
                       }
                 ></Avatar>
             <h3>{userInfo.name}</h3>
+           <div>
+           {followers.length > 1 ? (
+                <p style={{cursor:'pointer'}}>{followers.length} 
+                <Link to={'followers'}> Followers</Link>
+                </p>
+            ) : (
+                <p  style={{cursor:'pointer'}}>{followers.length} 
+                  <Link to={'followers'}> Follower</Link>
+                </p>
+            )}
+           </div>
             <p>{userInfo.bio}</p>
-        
             <span onClick={handleOpen}>Edit profile</span>
             <Modal
             open={open}

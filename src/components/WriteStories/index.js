@@ -31,7 +31,8 @@ const style = {
 
 
 const Index = () => {
-  const userId = useSelector(selectUserId) || useSelector(selectUser_id);
+  const userId = useSelector(selectUserId);
+  const user_id = useSelector(selectUser_id);
   const [open, setOpen] = React.useState(false);
   const [close, setClose] = React.useState(false);
   const [read_time, setReadTime] = useState('');
@@ -56,7 +57,7 @@ const Index = () => {
     title: '',
     content: '',
     read_time: '',
-    user_id: userId, 
+    user_id: userId || user_id, 
     created_date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' }),    comments: [], // Initialize with an empty array or set as needed
   });
 

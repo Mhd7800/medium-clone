@@ -24,7 +24,8 @@ const ReadingList = () => {
 
 
     const [userInfo, setUserInfo] = useState({});
-    const userId = useSelector(selectUserId) || useSelector(selectUser_id);
+    const userId = useSelector(selectUserId);
+    const user_id = useSelector(selectUser_id);
     const user = useSelector(selectUser);
     const [open, setOpen] = React.useState(false);
     const [close, setClose] = React.useState(false);
@@ -55,7 +56,7 @@ const style = {
 
    const fetchPosts = async () => {
     try {
-        const response = await fetch(`http://localhost:8080/api/v1/posts/getPostByUserId/${userId}`);
+        const response = await fetch(`http://localhost:8080/api/v1/getUserList/${userId || user_id}`);
         if (response.ok) {
             const data = await response.json();
             setPosts(data);
@@ -130,7 +131,7 @@ const fetchUser = async (userId) => {
 
     const getUserInfoById = async () => {
         try {
-          const response =  await axios.get(`http://localhost:8080/api/v1/user/${userId}`);
+          const response =  await axios.get(`http://localhost:8080/api/v1/user/${userId || user_id}`);
           const user = response.data;
           setUserInfo(user);
         } catch (error) {
@@ -168,7 +169,7 @@ const handleClose = () => {
 useEffect(() => {
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/v1/user/${userId}`);
+      const response = await axios.get(`http://localhost:8080/api/v1/user/${userId || user_id}`);
       setUserInfo(response.data);
     } catch (error) {
       console.error('Error fetching user information:', error);
@@ -176,7 +177,7 @@ useEffect(() => {
   };
 
   fetchUserInfo();
-}, [userId]);
+}, [userId || user_id]);
 
 
 

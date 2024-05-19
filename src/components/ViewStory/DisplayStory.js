@@ -5,15 +5,17 @@ import axios from 'axios'
 import { useSelector } from "react-redux"
 import { selectUser } from '../../features/userSlice'
 import { selectUserId } from '../../features/userIdSlice'
-import { Avatar, Spin, Tooltip, Popover } from 'antd';
 import getUserInfoById from "../getUserInfo";
 import ReactHTMLparser from "react-html-parser";
 import moment from 'moment';
 import LandingHeader from '../LandingPage/LandingHeader'
 import HomeHeader from '../HomePage/HomeHeader'
 import Alert from '@mui/material/Alert';
-import { Button, message } from 'antd';
 import { selectUser_id } from '../../features/authSlice'
+import { Avatar, Image, Spin, Tooltip, Popover,Button, message  } from 'antd'
+import { CPopover, CButton } from '@coreui/react'
+import Comments from './Comments'
+
 
 
 
@@ -24,17 +26,88 @@ const DisplayStory = () => {
   const { postId } = useParams();
   const [postData, setPostData] = useState(null);
   const user = useSelector(selectUser);
-  const userId = useSelector(selectUserId) || useSelector(selectUser_id);
+  const userId = useSelector(selectUserId);
+  const user_id =  useSelector(selectUser_id);
   const [loading, setLoading] = useState(false)
   const [singleB, setSingleB] = useState();
   const [userDetails, setUserDetails] = useState();
-  const [successMessageVisible, setSuccessMessageVisible] = useState(false);
   const [authorInfo, setAuthorInfo] = useState();
   const [authorId, setAuthorId] = useState();
   const [open, setOpen] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const [isPopoverVisible, setPopoverVisible] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [canfollowUsers, setCanFollowUsers] = useState([]);
+  //const [isFollowing, setIsFollowing] = useState(false);
 
 
+  const fetchCanFollow = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/v1/can-follow?userName=${userDetails?.username}`);
+      setCanFollowUsers(response.data);
+    } catch (error) {
+      console.log('Failed because of: ' + error);
+    }
+  };
+
+  const canFollow = async (userId) => {
+    for (const user of canfollowUsers) {
+      if (userId === user.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+
+  const handleFollow = async (authorId) => {
+    try {
+      const response = await axios.post(`http://localhost:8080/api/v1/follow?followerId=${userId || user_id}&followingId=${authorId}`);
+      if (response.status === 200) {
+        message.info('Followed successfully');
+        fetchCanFollow();
+      }
+    } catch (error) {
+      console.error('Error following user:', error);
+      message.error('Failed to follow user');
+    }
+  };
+  
+  const handleUnfollow = async (authorId) => {
+    try {
+      const response = await axios.post(`http://localhost:8080/api/v1/unfollow?followerId=${userId || user_id}&followingId=${authorId}`);
+      if (response.status === 200) {
+        message.info('User unfollowed');
+        fetchCanFollow();
+      }
+    } catch (error) {
+      console.error('Error unfollowing user:', error);
+      message.error('Failed to unfollow user');
+    }
+  };
+
+
+
+  useEffect(()=>{
+    fetchComments();
+  }, [postId])
+  
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/v1/posts/${postId}/comments`);
+      const commentsData = response.data; 
+      setComments(commentsData);
+      console.log('comments:', commentsData);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  };
+
+ 
+
+  const togglePopover = () => {
+    setPopoverVisible(!isPopoverVisible);
+  };
 
   useEffect(()=>{
     getUserInfoById(authorId)
@@ -42,6 +115,13 @@ const DisplayStory = () => {
     setAuthorInfo(user);
   })
   },[authorId])
+
+  useEffect(()=>{
+    getUserInfoById(user_id || userId)
+  .then((user)=>{
+    setUserDetails(user);
+  })
+  },[user_id || userId])
 
   const handleOpenChange = (newOpen) => {
     setOpen(newOpen);
@@ -63,10 +143,20 @@ const DisplayStory = () => {
       const Guest = () =>{
         return (
          <div className='guestClass'>
-           <span className='guestOption'>
-           <img width="25" height="25" src="https://img.icons8.com/fluency-systems-regular/20/add-user-male--v1.png" alt="add-user-male--v1"/>
-            Follow author
-          </span>
+           {canFollow(singleB.user_id)? (
+            <span className='guestOption' style={{cursor:'pointer'}} onClick={()=>handleFollow(singleB.user_id)}>
+            <img width="25" height="25" src="https://img.icons8.com/fluency-systems-regular/20/add-user-male--v1.png" alt="add-user-male--v1"/>
+             Follow author
+           </span>
+           ):
+           (
+            <span className='guestOption' style={{cursor:'pointer'}} onClick={()=>handleUnfollow(singleB.user_id)}>
+            <img width="25" height="25" src="https://img.icons8.com/external-aficons-studio-basic-outline-aficons-studio/25/external-delete-user-user-interface-aficons-studio-basic-outline-aficons-studio.png" alt="external-delete-user-user-interface-aficons-studio-basic-outline-aficons-studio"/>
+            Unfollow
+            </span>
+           )}
+           
+           
           {contextHolder}
           <span className='guestOption' onClick={handleCopyLink}>
           <img width="25" height="25" src="https://img.icons8.com/material-two-tone/20/link--v1.png" alt="link--v1"/>
@@ -99,11 +189,8 @@ const DisplayStory = () => {
 
     const addToList = async () => {
       try {
-        await axios.post(`http://localhost:8080/api/v1/${userId}/addPostToList/${singleB.id}`);
-        setSuccessMessageVisible(true); 
-        setTimeout(() => {
-          setSuccessMessageVisible(false); // Hide the success message after 1 second
-        }, 1000);
+        await axios.post(`http://localhost:8080/api/v1/${userId || user_id}/addPostToList/${singleB.id}`);
+        message.info('Story saved successfully');
         console.log('Post saved successfully');
       } catch (error) {
         // Handle any errors that occur during the request
@@ -120,7 +207,10 @@ const DisplayStory = () => {
 
         const response = await fetch(`http://localhost:8080/api/v1/posts/getPostById/${postId}`);
         const postData = await response.json();
-        setPostData(postData);
+        if (postData) {
+          setSingleB(postData);
+        }
+        
         setSingleB(postData);
         setLoading(false);
         setAuthorId(postData.user_id);
@@ -167,25 +257,30 @@ const DisplayStory = () => {
 const navigate = useNavigate();
 
   const handleClik = () =>{
-    if (localStorage.getItem("isLoggedIn")===true){
+    if (userId || user_id){
       addToList();
     }
     else {
       navigate("/sigin")
     }
-  }
+  }  
 
-  
+  const handleCommentSubmit = (newComment) => {
+    setComments([...comments, newComment]);
+  };
 
   return (
 
     <>
-    {
-      localStorage.getItem("isLoggedIn")===true ? <LandingHeader/> : <HomeHeader/>
-    }
+   
   <Spin spinning={loading}>
 
-  <div className="singleBlog">          
+  <div className="singleBlog">
+
+    {
+      (userId || user_id) ? <LandingHeader/> : <HomeHeader/>
+    }
+
             <h1
               className="singleBlog__title"
               style={{ fontFamily: " Lato, sans-serif", fontSize: '32px' }}
@@ -221,9 +316,15 @@ const navigate = useNavigate();
                         {singleB.claps}
                       </span>
 
-                      <span>
+                     
+                      <span onClick={togglePopover} style={{cursor:'pointer'}}>
                       <img width="20" height="20" src="https://img.icons8.com/ios/50/speech-bubble--v1.png" alt="speech-bubble--v1"/>
-                        31
+                      {isPopoverVisible && (
+                          <div className="popover" onClick={(e) => e.stopPropagation()}>
+                           <h2>Responses ({comments.length})</h2>
+                            <Comments onCommentSubmit={handleCommentSubmit} comments={comments} userDetails={userDetails} togglePopover={togglePopover} postId={postId} fetchComments={fetchComments}/>
+                          </div>)}
+                          {comments.length}
                       </span>
                       </div>
 
@@ -250,7 +351,7 @@ const navigate = useNavigate();
 
                         <Popover
                         
-                        content={userId === singleB.user_id ? <Content /> : <Guest />}
+                        content={userId || user_id === singleB.user_id ? <Content /> : <Guest />}
                       placement="bottom"
                       trigger="click"
                       open={open}
@@ -278,9 +379,7 @@ const navigate = useNavigate();
                 )
             }
         <div className="singleBlog__body">
-        {successMessageVisible && (
-      <Alert severity="success">Successfully saved to user List.</Alert>
-    )}
+  
           {ReactHTMLparser(singleB?.content)}
          
 

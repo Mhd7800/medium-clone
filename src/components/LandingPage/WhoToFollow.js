@@ -1,8 +1,13 @@
 import { Avatar } from "antd";
 import React from "react";
+import './css/whoToFollow.css'
 
 
-const WhoToFollow = ({ data }) => {
+const WhoToFollow = ({ data, handleFollow, handleUnfollow}) => {
+
+  const { id, username, isFollowing } = data;
+
+
   return (
     <div className="follow-content">
       <Avatar
@@ -14,13 +19,20 @@ const WhoToFollow = ({ data }) => {
         <h3>{truncate(String(data?.name), 15)}</h3>
         <span>@{String(data?.email).split("@")[0]}</span>
       </div>
-      <button
+
+      {isFollowing ? (
+        <button onClick={() => handleUnfollow(data.id)}>Unfollow</button>
+      ) : (
+        <button onClick={() => handleFollow(data.id)}>Follow</button>
+      )}
+
+      {/*<button
         style={{
           marginLeft: "auto",
         }}
       >
         Follow
-      </button>
+      </button>*/}
     </div>
   );
 };
