@@ -1,0 +1,49 @@
+.story-main{
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.storyLeft-Component{
+   display: flex;
+   flex-direction: column;
+   margin: 50px 120px;
+   flex: 3;
+}
+
+
+.list-UpperComponent{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3rem;
+    margin: 50px 0px;
+}
+.list-UpperComponent span{
+    display: flex;
+    
+}
+
+.list-UpperComponent button {
+    /*display: flex;*/
+    color: white;
+    background-color: green;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+
+
+.divider{
+    border-right: 1px solid #979494;
+}
+
+.storyRight-Component{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    margin-right: 50px;
+    margin-left: 25px;
+}

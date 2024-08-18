@@ -1,0 +1,23 @@
+/* ScrollableTabsNav.css */
+.scrollable-tabs-nav {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .tabs-container {
+    display: flex;
+  }
+  
+  .tab {
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .tab.active {
+    background-color: #3498db;
+    color: #fff;
+  }
+  

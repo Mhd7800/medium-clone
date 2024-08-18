@@ -1,0 +1,126 @@
+.userFollowers{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+}
+
+
+.userFollowersLeft{
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+    margin: 50px 20px;
+}
+
+.userFollowersRight{
+    display: flex;
+    flex: 4;
+    position: sticky; 
+    top: 0; 
+    height: 95vh; 
+    overflow-y: auto; 
+}
+
+
+.userFollowersLeftUppper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-bottom: 0.5px solid #dfdfdf;
+}
+
+.followersTitle h1{
+    font-size: 2.5rem;
+}
+
+.bredcrumbUserFollower{
+    
+}
+
+.userFollowerRightUpper{
+    display: flex;
+    flex-direction: column;
+    margin:  30px;
+}
+
+.userFollowerRightUpper p {
+    color: #767575;
+ }
+ .userFollowerRightUpper h3 {
+     font-size: 1rem;
+ }
+ .userFollowerRightUpper span{
+     color: green;
+     cursor: pointer;
+ }
+
+
+
+
+.followerContent {
+    display: flex;
+    flex-direction: row;
+    /*justify-content: space-between; */
+    width: 100%;
+   /* background-color: #767575;*/
+   margin: 20px 0;
+}
+
+
+.followerLeft{
+    margin: 0px 0px;
+    flex: 1;
+}
+
+.followerMiddle{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 5px;
+    flex: 7;
+    /*background-color: #166516;*/
+}
+
+.followerMiddle span{
+    margin: 0px 5px ;
+    padding: 5;
+}
+
+.followersRight{
+    justify-content: flex-end;
+    flex: 2;
+    /*background-color: #166516;*/
+}
+
+.bt2 {
+    justify-content: flex-end;
+    align-items: flex-start;
+    color: white;
+    background-color: #008000;
+    border-radius: 25px;
+    border: 1px solid #008000;;
+}
+
+.bt2:hover{
+    background-color: #166516;
+}
+
+.bt1 {
+    justify-content: flex-end;
+    align-items: flex-start;
+    color: green;
+    background-color: white;
+    border-radius: 25px;
+    border: 1px solid #008000;;
+}
+
+.bt1:hover{
+    background-color: #ffff;
+}
+
+@media (max-width: 600px){
+    
+    .userFollowersRight{
+        display: none;
+    }
+}

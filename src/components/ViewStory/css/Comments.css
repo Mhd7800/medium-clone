@@ -1,0 +1,112 @@
+.comment-section {
+  height: 100%; 
+  width: 400px; 
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.commentForm{
+  
+}
+.commentFormUpper {
+  display: flex;
+  align-items: center;
+  
+}
+
+.commentContent input {
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 100px;
+  
+}
+
+.commentFormUpper img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.commentFormUpper span {
+  font-weight: bold;
+}
+
+.commentButtons {
+  margin-bottom: 20px;
+}
+
+.commentButtons button {
+  border-radius: 33px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.respondButton {
+  background-color: green;
+  border: none;
+  color: white;
+}
+
+.cancelButton {
+  background-color: white;
+  color: black;
+  margin-right: 10px;
+}
+
+.cancelButton:hover{
+  background-color: white;
+}
+.respondButton:hover {
+  opacity: 0.8;
+  background-color: green;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.comment {
+  margin-bottom: 20px;
+}
+
+.upperComment{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.upperCommentRight{
+  display: flex;
+  flex-direction: column;
+}
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment-details {
+  display: flex;
+  flex: row;
+  align-items: center;
+}
+
+.username {
+  font-weight: 500;
+}
+
+.comment-text {
+  margin-top: 5px;
+  font-size: medium;
+}
+
+.like-count {
+  font-size: 0.9em;
+  color: #777;
+}

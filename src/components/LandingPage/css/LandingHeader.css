@@ -1,0 +1,175 @@
+.landingHeader{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    background-color: rgb(255,255,255);
+    /*box-shadow: 2px 8px 8px rgba(233, 232, 232, 0.5);*/
+    border-bottom: 1px solid #d6d1d1;
+}
+
+.header-left{
+    display: flex;
+    align-items: center;
+    margin: 0px 15px;
+}
+
+.header-left-option{
+  padding: 0 5px;
+}
+
+.header-left-option input {
+    border-radius: 33px;
+    border: none;
+    background-color: #dfdfdf;
+    padding: 10px 16px;
+    font-size: 1rem;
+    
+}
+
+.header-right{
+    display: flex;
+    align-items: center;
+}
+
+#write_id span{
+  /*display: flex;
+  flex-direction: row;
+  justify-content: space-between;*/
+  
+}
+
+
+.header-right-options{
+    display:center;
+    align-items: center;
+    margin: 0px 15px;
+}
+
+.header-right-option{
+    padding: 0 10px;
+    cursor:pointer;
+    font-size: 20px;
+    margin: 0px 15px;
+}
+
+.header-right-button{
+    margin: 0px 10px;
+}
+
+
+.pop-title{
+    display: flex;
+    width: 100%;
+    /*margin: 20px 0;*/
+}
+
+.pop-title-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.pop-info-name {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pop-info-name > span {
+    margin-left: 10px;
+  }
+  
+  .pop-content {
+    display: flex;
+  }
+  /*********************/
+  .pop-content-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 10px;
+  }
+  
+  .pop-content-container span {
+    color: rgb(80, 80, 80);
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  
+  .pop-content-container span:hover {
+    color: rgb(207, 207, 207);
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: inherit;
+  }
+  
+  .pop-content-container svg {
+    height: 1.5em;
+    width: 1.5em;
+    margin-right: 10px;
+  }
+  .pop-content-container span{
+    font-size: 1rem;
+  }
+  
+  .profile,
+  .library,
+  .stories,
+  .stats,
+  .becomeMemeber,
+  .settings,
+  .signout {
+    display: flex;
+    align-items: center;
+    margin: 5px 20px;
+    padding: 1px 0;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .profile:hover,
+  .library:hover,
+  .stories:hover,
+  .stats:hover,
+  .becomeMemeber:hover,
+  .settings:hover,
+  .signout:hover {
+    color: rgb(207, 207, 207);
+  }
+
+  .searchBoxHeader{
+    position: absolute;
+    top: 50px;
+    width: 180px;
+    background-color: #dfdfdf;
+    border: 1px solid #dfdfdf;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 1000;
+  }
+
+  .searchBoxUserInfo{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .searchBoxUserInfo img{
+    width: 30px;
+    height: 30px;
+    border-radius: 33px;
+    margin: 5px;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .pop-content-container {
+      
+    }
+  }
+  

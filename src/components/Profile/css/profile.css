@@ -1,0 +1,167 @@
+.profilePage{
+    display: flex;
+    flex-direction: column;
+    min-height: 95vh;
+}
+
+.profileContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-grow: 1;
+    /*margin: 0 50px;*/
+}
+
+.profileName {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 3rem;
+}
+.profileName span:nth-child(2){
+    margin: 15px 0;
+    color: #999999;
+
+}
+.profileLeftContent{
+    display: flex;
+    flex-direction: column;
+    flex:3;
+}
+
+.line{
+    border-right: 1px solid 
+}
+
+.profileTabElement{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 120px;
+}
+
+
+.profileListItem{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    height: 150px;
+    background-color: #dfdfdf;
+}
+.profileLeftItem{
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+    padding: 20px;
+}
+
+.profileRightItem{
+    display: flex;
+    flex-direction: row;
+    flex: 4;
+}
+
+.profileRightItem img:nth-child(1) {
+    width: 50%;
+    height: 100%;
+    object-fit: cover; 
+    margin-right: 3px
+}
+.profileRightItem img:nth-child(2) {
+    width: 30%;
+    height: 100%;
+    object-fit: cover; 
+    margin-right: 3px
+}
+.profileRightItem img:nth-child(3) {
+    width: 20%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+
+.profileLeftItemInfo span {
+    padding-left: 10px;
+}
+
+.profileleftItemBottom {
+    display: flex;
+    flex-direction: row;
+    font-size: 0.8rem;
+}
+.profileleftItemBottom span{
+    margin-right: 8px;
+}
+
+.profileRigthContent{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+}
+
+.profileRightUpper{
+    display: flex;
+    flex-direction: column;
+    margin:  30px;
+}
+
+.profileRightUpper p {
+   color: #767575;
+}
+.profileRightUpper h3 {
+    font-size: 1rem;
+}
+.profileRightUpper span{
+    color: green;
+    cursor: pointer;
+}
+
+.proileFooter{
+position: absolute;
+  bottom: 0;
+  color: #000;
+  margin: 10px 30px;
+  text-align: center;
+}
+
+
+
+
+
+
+/* Media query for small devices */
+@media (max-width: 600px) {
+    .profileRigthContent {
+        display: none; 
+    }
+
+    .profileContainer{
+        justify-content:space-evenly;
+        margin: 0px;
+        padding: 0px;
+        
+    }
+    
+    .profileName {
+        margin: 15px 0;
+        font-size: 2rem;
+    }
+
+    .profileTabElement{
+        margin: 10px;
+    }
+
+    .profileListItem{
+        width:fit-content;
+        height: 150px;
+    }
+
+    .profileName p{
+        font-size: 2rem;   
+    }
+    
+
+    
+}
+

@@ -1,0 +1,58 @@
+.singleBlog {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    /* width: fit-content; */
+  }
+
+  
+
+
+  .inputTitle{
+    border: none;
+    outline: none;
+    font-size: 36px;
+    margin: 50px;
+  }
+
+  .inputContent{
+    border: none;
+    outline: none;
+    font-size: 18px;
+    resize: none;
+    box-sizing: border-box;
+    overflow: auto;
+    width: 100%;
+    height:20vw
+  }
+
+  .singleButton{
+    color: white;
+    background-color: green;
+    display: flex;
+    justify-content:flex-end;
+    align-items: flex-end;
+    align-content: flex-end;
+    margin: 36px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    time {
+      font-size: small;
+      color: #aaa;
+      padding: 10px 7%;
+    }
+    .singleBlog__body a {
+      width: 100%;
+      overflow: hidden;
+    }
+  
+    strong > u {
+      width: 50%;
+      overflow: hidden;
+    }
+  
+    .singleBlog__title {
+      font-size: 46px;
+    }
+  }

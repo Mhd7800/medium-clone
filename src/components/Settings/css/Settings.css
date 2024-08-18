@@ -1,0 +1,52 @@
+.settingsContainer{
+    margin: 0 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.settingsLeftUpper span{
+    font-size: 3rem;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.settingsLeftUpper{
+    margin: 20px 0;
+}
+.settingsLeft{
+    display: flex;
+    flex-direction: column;
+    flex:3
+}
+
+.settingsRight{
+    flex: 2;
+}
+
+.settinsRight{
+    display: flex;
+    flex-direction: column;
+}
+
+.settigsRightUpper{
+    display: flex;
+    flex-direction: column;
+}
+
+.settigsRightUpper span {
+    margin: 10px 0;
+    font-weight: lighter;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+@media screen and (max-width:600px) {
+    .settinsRight{
+        display: none;
+    }
+
+    .settingsLeft{
+        width: 90%;
+    }
+}

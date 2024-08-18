@@ -1,0 +1,59 @@
+.ProfileInformation{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.userInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.photoInfo{
+    margin-left: 20px;
+}
+.photoText{
+    margin: 15px 0;
+}
+.photoButtons span{
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.userForm{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.userForm label{
+    padding: 2px 0;
+}
+
+.userForm input{
+    border: none;
+    outline: none; /* Remove the default focus outline */
+    resize: none;
+    border-bottom: 1px solid #000;
+}
+
+.userForm span{
+    font-size: 0.85rem;
+    margin: 10px 0;
+    color: #000;
+}
+
+
+.formButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 10px 0;
+    
+}
+
+.formButtons button{
+    border-radius: 25px;
+    margin: 0 5px;
+}

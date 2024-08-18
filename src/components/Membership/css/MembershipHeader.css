@@ -1,0 +1,58 @@
+/* css for header */
+.member-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #4479ff !important; 
+    padding: 20px 0px;
+    border-bottom: 1px solid #fff;
+    position: fixed;
+  }
+
+  .member-header-left {
+    display: flex;
+    align-items: center;
+    margin: 0px 25px;
+  }
+  
+  .member-header-right {
+    display: flex;
+    align-items: center;
+    margin: 0px 25px;
+    color: #fff;
+  }
+  
+  .member-header-right-options {
+    display: flex;
+    align-items: center;
+  }
+  
+  .member-header-right-option {
+    margin: 0px 10px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+  
+  .member-header-right-button {
+    margin: 0px 10px;
+  }
+  
+  .member-header-right-started > span > button {
+    outline: none;
+    border: none;
+    padding: 8px 30px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 33px;
+    font-size: 15px;
+  }
+  .link{
+    list-style: none;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .member-header-right-option {
+      display: none;
+    }
+  }
+

@@ -1,0 +1,192 @@
+.membership{
+    background-color: #4479ff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+}
+
+.top-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 90px 0;
+    align-items: center;
+    width: 100%;
+    border-bottom: #fff 1px solid;
+}
+
+.top-content > h1 {
+    font-size: 100px;
+    display: flex;
+    justify-content: center;
+    font-family: 'Gt super text book', Georgia, sans-serif;
+    color: #fff;
+    font-weight: lighter;
+    margin-bottom: 10px
+    /*margin-bottom: 5px;*/
+}
+
+.top-content > h6{
+    font-size: 20px;
+    font-weight: normal;
+    color: #fff;
+    font-family: 'Gt super text book', Georgia, sans-serif;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.top-content > button {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    font-size: 20px;
+    margin: 30px 0;
+    margin-top: 0px;
+    cursor: pointer;
+    font-weight: lighter;
+    /*font-family: 'Gt super text book', Georgia, sans-serif;*/
+}
+
+.top-content > button:hover{
+    background-color: #4479ff;
+    color: #fff;
+    outline-color: #fff;
+    border-style:solid;
+    /*background-color: #eee;*/
+}
+/* middle part */
+.hr{
+    border-width: 1px;
+    color: #fff;
+}
+
+.middle-content{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    padding: 25px;
+    color: #fff;
+    width:100%;
+}
+.middle-content h2{
+    font-size: 50px;
+    font-weight: lighter;
+    font-family: 'Gt super text book', Georgia, sans-serif;
+}
+
+.middle-content  img{
+    width: 300px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.middle-right-content{
+    margin: 20px;
+    flex: 1;
+}
+
+.middle-left-content{
+    margin: 20px;
+    flex: 1;
+    justify-content: space-around;
+}
+
+
+.title{
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Gt super text book', Georgia, sans-serif;
+    letter-spacing: 2.6;
+  }
+
+.bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: #bcdfff;
+}
+
+.bottom h2 {
+    font-family: 'Gt super text book', Georgia, sans-serif;
+    text-align: center;
+    font-size: 70px;
+    font-weight: lighter;
+}
+
+.bottom  button {
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 30px 0;
+    margin-top: 0px;
+    border-radius: 25px;
+    font-size: 25px;
+    cursor: pointer;
+    font-weight: lighter;
+    font-family: 'Gt super text book', Georgia, sans-serif;
+}
+
+.bottom button:hover{
+    background-color: #232020;
+    color: #fff;
+    outline-color: #fff;
+    /*background-color: #eee;*/
+}
+
+@media screen and (max-width:600px) {
+    .top-content{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        /*padding: 0;*/
+        margin: 10px;
+        align-items: flex-start;
+    }
+    .top-content > h1{
+        font-size: 2.20rem;
+    }
+    .top-content > h6{
+        font-size: 1rem;
+    }
+    .top-content > button{
+        font-size: 15px;
+        align-items: left;
+    }
+    /*-----------*/
+    
+    .middle-content h2{
+        font-size: 2rem;
+    }
+    .middle-content p{
+        font-size: 1rem;
+    }
+    .middle-content {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+    }
+    .middle-content img{
+        width: 150px;
+    }
+    .hr{
+        display: none;
+    }
+    .title{
+        font-size: 30px;
+    }
+    .bottom h2{
+        font-size: 60px;
+    }
+    .bottom button{
+        font-size: 20px;
+    }
+}
+

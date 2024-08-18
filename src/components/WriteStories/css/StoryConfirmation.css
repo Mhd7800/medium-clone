@@ -1,0 +1,126 @@
+.confirmStoryWrapper{
+    display: flex;
+    flex-direction: row;
+    flex: 2;
+}
+
+.confirmStoryLeft{
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+    flex: 1;
+}
+
+.imageCaption{
+    background-color: #fafafa;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    margin: 20px 0px;
+}
+
+.imageCaption span{
+   align-self: center;
+   align-items: center;
+   align-content: center;
+   margin: 50px;
+}
+
+.formStoryConfirmation{
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+}
+
+.formStoryConfirmation input {
+    border: none;
+    outline: none;
+    resize: none;  
+    padding: 5px 0; 
+    font-size: 1.5rem;
+    border-bottom: 1px solid ;
+}
+
+.confirmStoryNote{
+    margin: 10px 0;
+}
+
+.confirmStoryRight{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+}
+
+.confirmStoryRight span {
+    margin: 10px 0;
+}
+
+/*.confirmStoryRight input {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+
+.confirmStoryRight button{
+    margin: 20px 0;
+    background-color: green;
+    border-radius: 25px;
+    padding: 10px 20px;
+    align-items: flex-start;
+}*/
+
+
+.confirmStoryRight .searchContainer {
+    position: relative;
+  }
+  
+  .confirmStoryRight .searchBar {
+    position: relative;
+  }
+  
+  .confirmStoryRight .searchBar input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .confirmStoryRight .searchBar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1;
+  }
+  
+  .confirmStoryRight .searchBar li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .confirmStoryRight .searchBar li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .confirmStoryRight button {
+    margin: 20px 0;
+    background-color: green;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+  }
+  
