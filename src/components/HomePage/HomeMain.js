@@ -31,7 +31,7 @@ export default function
             Discover stories, thinking, and expertise from writers on any topic.
             </h6>
             <button onClick={showModal}>
-                Start Reading
+                Start Reading.
             </button>
         </div>
         <div className='home-main-animation'>
