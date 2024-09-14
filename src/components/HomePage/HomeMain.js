@@ -25,7 +25,7 @@ export default function
         <div className='home-main-container'>
         <div className='home-main-content'>
             <h3>
-            Stay curious.
+            Stay curious..
             </h3>
             <h6>
             Discover stories, thinking, and expertise from writers on any topic.
